@@ -32,7 +32,7 @@ execute() {
 execute_if_exists() {
     local _function
     _function="${1}"
-    [[ "$(type -t "${_function}")" != "function" ]] && return 0
+    [[ "$(type -t "${_function}")" != "function" ]] && return 1
 
     "${_function}" || error "${_function} failed"
 }
@@ -57,16 +57,16 @@ setup_packages() {
 
         export package_dir="${dotfiles}/${package}"
 
-        execute_if_exists "_${package}_pre_install"
-        execute_if_exists "_${package}_pre_install_${hosttype}"
+        execute_if_exists "_${package}_pre_install" || true
+        execute_if_exists "_${package}_pre_install_${hosttype}" || true
         if [[ "${links_only}" -eq "0" ]]; then
             execute_if_exists "_${package}_install_deps_${hosttype}" \
                 || execute "_${package}_install_deps"
         fi
         execute_if_exists "_${package}_link_files_${hosttype}" \
             || execute "_${package}_link_files"
-        execute_if_exists "_package_post_install_${hosttype}"
-        execute_if_exists "_${package}_post_install"
+        execute_if_exists "_package_post_install_${hosttype}" || true
+        execute_if_exists "_${package}_post_install" || true
     done
 }
 
@@ -98,16 +98,16 @@ clean_packages() {
 
         export package_dir="${dotfiles}/${package}"
 
-        execute_if_exists "_${_package}_pre_clean"
-        execute_if_exists "_${_package}_pre_clean${hosttype}"
+        execute_if_exists "_${_package}_pre_clean" || true
+        execute_if_exists "_${_package}_pre_clean${hosttype}" || true
         if [[ "${links_only}" -eq "0" ]]; then
             execute_if_exists "_${_package}_clean_deps_${hosttype}" \
                 || execute "_${_package}_clean_deps"
         fi
         execute_if_exists "_${package}_clean_files_${hosttype}" \
             || execute "_${_package}_clean_files"
-        execute_if_exists "_package_post_clean_${hosttype}"
-        execute_if_exists "_${_package}_post_clean"
+        execute_if_exists "_package_post_clean_${hosttype}" || true
+        execute_if_exists "_${_package}_post_clean" || true
     done
 }
 
@@ -133,7 +133,7 @@ clean_system() {
     esac
 }
 
-create_package_template() {
+create_package_templates() {
     for package in "$@"; do
         local _dir
         _dir="${dotfiles}/${package}"
@@ -181,8 +181,11 @@ Commands:
   usage                                     Display this message.
 
 Options:
-  -d --debug           Enable debug mode
+  -d DIR --data-dir    Use DIR as the directory to use for expected largish
+    amounts of data (Primarily useful when using a separate filesystem for
+    storing non essential stuff).
   -l --links-only      Do not try to install or remove packages, just
+  -v --verbose         Enable verbose mode
     setup/remove symlinks.
 EOF
 }
@@ -192,7 +195,7 @@ commands=(
     "setup_packages"
     "clean_system"
     "clean_packages"
-    "create_package_template"
+    "create_package_templates"
     "usage"
 )
 
@@ -238,17 +241,26 @@ canonicalize() {
 
 dotfiles="$(dirname "$(canonicalize)")"
 
-debug="0"
+verbose="0"
 links_only="0"
+data_dir=""
 while [[ "$#" -gt 0 ]]; do
     key="${1}"
     shift
     case "${key}" in
-        -d|--debug)
-            debug=1
+        -d|--data-dir)
+            if [[ -z "${1}" ]]; then
+                usage
+                exit 1
+            fi
+            data_dir="$(realpath "${1}")"
+            shift
             ;;
         -l|--links-only)
             links_only=1
+            ;;
+        -v|--verbose)
+            verbose=1
             ;;
         *)
             positional+=( "${key}" ) # save it in an array for later
@@ -297,12 +309,13 @@ macos_packages=()
 ubuntu_packages=()
 
 if check_command "${1}"; then
-    if [[ "${debug}" -eq "1" ]]; then
+    if [[ "${verbose}" -eq "1" ]]; then
         # Show exactly where we are when xtrace prints
         export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
         # Show commands after full expansions have occured
         set -x
     fi
+    [[ -n "${data_dir}" && -d "${data_dir}" ]] || mkdir -p "${data_dir}"
     "$@"
 else
     usage
