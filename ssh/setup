@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+_ssh_pre_install() {
+    mkdir -p "${HOME}/.ssh"
+}
+
+_ssh_install_deps_arch() {
+    sudo pacman -Sy --noconfirm --needed openssh
+}
+
+_ssh_install_deps_ubuntu() {
+    sudo apt-get -qq -y install ssh
+}
+
+_ssh_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm openssh
+}
+
+_ssh_clean_deps_ubuntu() {
+    sudo apt-get -y remove ssh
+}
+
+_ssh_install_deps() { :; }
+
+_ssh_clean_deps() { :; }
+
+_ssh_link_files() {
+    mkdir -p "${HOME}/.ssh"
+    ln -sf "${package_dir}/config" "${HOME}/.ssh/config"
+}
+
+_ssh_clean_files() {
+    rm "${HOME}/.ssh/config"
+}
+
+_ssh_post_clean() {
+    rm -rf "${HOME}/.ssh"
+}

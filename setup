@@ -1,0 +1,310 @@
+#!/usr/bin/env bash
+
+# Fail on first command error
+set -e
+
+red="\033[0;31m"
+yellow="\033[0;33m"
+restore="\033[0;0m"
+
+error() {
+    printf "${red}Error: %s!${restore}\n" "${1}"
+    exit "${2:-1}"
+}
+
+warn() {
+    printf "${yellow}Warning: %s.${restore}\n" "${1}"
+}
+
+log() {
+    printf "Log: %s.\n" "${1}"
+}
+
+execute() {
+    local _function
+    _function="${1}"
+    [[ "$(type -t "${_function}")" != "function" ]] && \
+        error "Function (${_function}) does not exist"
+
+    "${_function}" || error "${_function} failed"
+}
+
+execute_if_exists() {
+    local _function
+    _function="${1}"
+    [[ "$(type -t "${_function}")" != "function" ]] && return 0
+
+    "${_function}" || error "${_function} failed"
+}
+
+load_package() {
+    local _package
+    _package="${1}"
+    local _package_setup
+    _package_setup="${dotfiles}/${_package}/setup"
+
+    if [[ ! -f "${_package_setup}" ]]; then
+        error "package (${_package}) setup script does not exist"
+    fi
+    # shellcheck source=/dev/null
+    source "${_package_setup}" \
+        || error "${_package_setup} could not be sourced"
+}
+
+setup_packages() {
+    for package in "${@}"; do
+        load_package "${package}"
+
+        export package_dir="${dotfiles}/${package}"
+
+        execute_if_exists "_${package}_pre_install"
+        execute_if_exists "_${package}_pre_install_${hosttype}"
+        if [[ "${links_only}" -eq "0" ]]; then
+            execute_if_exists "_${package}_install_deps_${hosttype}" \
+                || execute "_${package}_install_deps"
+        fi
+        execute_if_exists "_${package}_link_files_${hosttype}" \
+            || execute "_${package}_link_files"
+        execute_if_exists "_package_post_install_${hosttype}"
+        execute_if_exists "_${package}_post_install"
+    done
+}
+
+init_system() {
+    setup_packages "${base_packages[@]}"
+
+   # When setting up for a new host OS/distribution, add a case here to setup
+   # the specific packages. You could probably hack something together with
+   # eval, but the risk is not worth it, since there should not be that many
+   # different host types.
+    case "${hosttype}" in
+        arch)
+            setup_packages "${arch_packages[@]}"
+            ;;
+        ubuntu)
+            setup_packages "${ubuntu_packages[@]}"
+            ;;
+        macos)
+            setup_packages "${macos_packages[@]}"
+            ;;
+        *)
+        ;;
+    esac
+}
+
+clean_packages() {
+    for package in "${@}"; do
+        load_package "${package}"
+
+        export package_dir="${dotfiles}/${package}"
+
+        execute_if_exists "_${_package}_pre_clean"
+        execute_if_exists "_${_package}_pre_clean${hosttype}"
+        if [[ "${links_only}" -eq "0" ]]; then
+            execute_if_exists "_${_package}_clean_deps_${hosttype}" \
+                || execute "_${_package}_clean_deps"
+        fi
+        execute_if_exists "_${package}_clean_files_${hosttype}" \
+            || execute "_${_package}_clean_files"
+        execute_if_exists "_package_post_clean_${hosttype}"
+        execute_if_exists "_${_package}_post_clean"
+    done
+}
+
+clean_system() {
+    clean "${base_packages[@]}"
+
+   # When setting up for a new host OS/distribution, add a case here to clean
+   # the specific packages. You could probably hack something together with
+   # eval, but the risk is not worth it, since there should not be that many
+   # different host types.
+    case "${hosttype}" in
+        arch)
+            clean "${arch_packages[@]}"
+            ;;
+        ubuntu)
+            clean "${ubuntu_packages[@]}"
+            ;;
+        macos)
+            clean "${macos_packages[@]}"
+            ;;
+        *)
+        ;;
+    esac
+}
+
+create_package_template() {
+    for package in "$@"; do
+        local _dir
+        _dir="${dotfiles}/${package}"
+        if [[ -d "${_dir}" ]]; then
+            warn "Package ${package} already exists... not creating template"
+            continue
+        fi
+        mkdir -p "${_dir}"
+        cat > "${_dir}/setup" <<EOF
+#!/usr/bin/env bash
+
+_${package}_install_deps() {
+    :;
+}
+
+_${package}_clean_deps() {
+    :;
+}
+
+_${package}_link_files() {
+    :;
+}
+
+_${package}_clean_files() {
+    :;
+}
+EOF
+    done
+}
+
+usage() {
+    cat <<EOF
+Usage: setup [OPTIONS] COMMAND
+
+Setup script for dotfiles
+
+Commands:
+  init_system                               Setup all registered packages for
+    the host.
+  setup_packages PACKAGE [...]              Setup packages provided on the
+    command line.
+  clean_system                              Remove all packages
+  clean_packages PACKAGE [...]              Remove packages and linked files.
+  create_package_templates PACKAGE [...]    Create a default package directory.
+  usage                                     Display this message.
+
+Options:
+  -d --debug           Enable debug mode
+  -l --links-only      Do not try to install or remove packages, just
+    setup/remove symlinks.
+EOF
+}
+
+commands=(
+    "init_system"
+    "setup_packages"
+    "clean_system"
+    "clean_packages"
+    "create_package_template"
+    "usage"
+)
+
+check_command() {
+    for c in "${commands[@]}"; do
+        [[ "${1}" = "${c}" ]] && return 0
+    done
+    return 1
+}
+
+# This is inteded to execute in a subshell.
+canonicalize() {
+    # Start with what is in the path, otherwise use $0 as a starting point.
+    local _target_file
+    _target_file="$(which "$0")"
+    [[ -z "${_target_file}" ]] && _target_file="$0"
+
+    case "${hosttype}" in
+        *linux)
+            # The assumption here is that this uses GNU Coreutils.
+            realpath "${_target_file}"
+            ;;
+        *)
+            # Known to work on macOS (stole it from Duncan), hopefully this
+            # works elsewhere too.
+            cd "$(dirname "${_target_file}")"
+            _target_file=$(basename "${_target_file}")
+
+            # Iterate down a (possible) chain of symlinks
+            while [[ -L "${_target_file}" ]]
+            do
+                _target_file=$(readlink "${_target_file}")
+                cd "$(dirname "${_target_file}")"
+                _target_file=$(basename "${_target_file}")
+            done
+
+            # Compute the canonicalized name by finding the physical path for
+            # the directory we're in and appending the target file.
+            echo "$(pwd -P)/${_target_file}"
+            ;;
+    esac
+}
+
+dotfiles="$(dirname "$(canonicalize)")"
+
+debug="0"
+links_only="0"
+while [[ "$#" -gt 0 ]]; do
+    key="${1}"
+    shift
+    case "${key}" in
+        -d|--debug)
+            debug=1
+            ;;
+        -l|--links-only)
+            links_only=1
+            ;;
+        *)
+            positional+=( "${key}" ) # save it in an array for later
+            ;;
+    esac
+done
+set -- "${positional[@]}" # restore positional parameters
+
+# First use a canonical version of what the host is running exactly.
+# If you are porting this to a new OS/distribution put some logic here to
+# assign a canonical hosttype.
+case "${OSTYPE}" in
+    darwin*)
+        hosttype="macos"
+        ;;
+    linux*)
+        hosttype="$(grep -E "^ID=" /etc/os-release | cut -d '=' -f 2)"
+        ;;
+    *)
+        error "Unknown host type"
+        ;;
+esac
+
+base_packages=(
+    "git"
+    "ssh"
+    "shell"
+    "bash"
+    "vim"
+    "emacs"
+)
+
+# When setting up for a new host OS/distribution, put any specific packages in
+# an appropriately named array down here.
+arch_packages=(
+    "auracle"
+    "xorg"
+    "i3"
+    "urxvt"
+    "dunst"
+    "redshift"
+)
+
+macos_packages=()
+
+ubuntu_packages=()
+
+if check_command "${1}"; then
+    if [[ "${debug}" -eq "1" ]]; then
+        # Show exactly where we are when xtrace prints
+        export PS4='+(${BASH_SOURCE}:${LINENO}): ${FUNCNAME[0]:+${FUNCNAME[0]}(): }'
+        # Show commands after full expansions have occured
+        set -x
+    fi
+    "$@"
+else
+    usage
+    exit 1
+fi

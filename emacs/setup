@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+_emacs_pre_install() {
+    mkdir -p "${HOME}/.emacs.d"
+}
+
+_emacs_install_deps_ubuntu() {
+    sudo apt-get -y install emacs
+}
+
+_emacs_install_deps_arch() {
+    sudo pacman -Sy --noconfirm --needed emacs
+}
+
+_emacs_install_deps_macos() {
+    brew install --cask emacs
+}
+
+_emacs_clean_deps_ubuntu() {
+    sudo apt-get -y remove emacs
+}
+
+_emacs_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm emacs
+}
+
+_emacs_clean_deps_macos() {
+    brew uninstall --cask emacs
+}
+
+_emacs_link_files() {
+    ln -sf "${package_dir}/init.el" "${HOME}/.emacs.d/init.el"
+    ln -sf "${package_dir}/custom-config" "${HOME}/.emacs.d/custom-config"
+    ln -sf "${package_dir}/snippets" "${HOME}/.emacs.d/snippets"
+}
+
+_emacs_clean_files() {
+    rm "${HOME}/.emacs.d/init.el"
+    rm "${HOME}/.emacs.d/custom-config"
+    rm "${HOME}/.emacs.d/snippets"
+}
+
+_emacs_post_clean() {
+    rm -rf "${HOME}/.emacs.d"
+}

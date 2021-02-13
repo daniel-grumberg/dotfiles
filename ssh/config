@@ -1,0 +1,31 @@
+HOST *
+ServerAliveInterval 240
+
+HOST *.doc.ic.ac.uk
+    User dg1814
+
+HOST labs
+    HostName shell1.doc.ic.ac.uk
+    User dg1814
+
+HOST phobos
+    HostName phobos.doc.ic.ac.uk
+    User dg1814
+
+HOST deimos
+    ProxyJump labs
+    HostName deimos.doc.ic.ac.uk
+    User dg1814
+
+HOST mars
+    HostName mars.doc.ic.ac.uk
+    User dg1814
+
+HOST kronos
+    ProxyJump labs
+    HostName 155.198.198.105
+    User dang
+    Port 39901
+
+HOST gituser.doc.ic.ac.uk
+    User dg1814
