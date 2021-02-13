@@ -1,0 +1,30 @@
+FROM ubuntu:latest
+MAINTAINER Daniel Grumberg
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV DEBCONF_NONINTERACTIVE_SEEN=true
+ENV TZ=Europe/London
+
+# OS updates and install
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo "$TZ" > /etc/timezone && \
+    apt-get update && \
+    apt-get -y install sudo bash && \
+# Create test user and add to sudoers \
+    useradd -m -s /bin/bash tester && \
+    usermod -aG sudo tester && \
+    echo "tester   ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers
+
+# Switch testuser
+USER tester
+ENV HOME /home/tester
+
+COPY --chown=tester ./ /home/tester/dotfiles
+
+# Change working directory
+WORKDIR /home/tester/dotfiles
+
+# Run setup
+RUN ["./setup", "-d", "init_system"]
+
+CMD ["/bin/bash"]

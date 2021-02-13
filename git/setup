@@ -1,0 +1,36 @@
+#!usr/bin/env bash
+
+_git_install_deps_arch() {
+    sudo pacman -Sy --noconfirm --needed git
+}
+
+_git_install_deps_ubuntu() {
+    sudo apt-get -y install git
+}
+
+_git_install_deps_macos() {
+    brew install git
+}
+
+_git_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm git
+}
+
+_git_clean_deps_ubuntu() {
+    sudo apt-get -y remove git
+}
+
+_git_clean_deps_macos() {
+    brew uninstall git
+}
+
+_git_link_files() {
+    ln -sf "${package_dir}/gitconfig" "${HOME}/.gitconfig"
+    ln -sf "${package_dir}/global_gitignore" "${HOME}/.global_gitignore"
+}
+
+_git_clean_files() {
+    rm "${HOME}/.gitconfig"
+    rm "${HOME}/.global_gitignore"
+}
+

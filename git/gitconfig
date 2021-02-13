@@ -1,0 +1,7 @@
+[core]
+	excludesfile = ~/.global_gitignore
+[pull]
+	rebase = true
+[user]
+	email = dany.grumberg@gmail.com
+	name = Daniel Grumberg
