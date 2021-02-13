@@ -4,20 +4,20 @@ _vim_install_deps_ubuntu() {
     sudo apt-get -y install vim
 }
 
-_vim_install_deps_arch() {
-    sudo pacman -Sy --noconfirm --needed vim
-}
-
-_vim_install_deps_macos() {
-    brew install vim
-}
-
 _vim_clean_deps_ubuntu() {
     sudo apt-get -y remove vim
 }
 
+_vim_install_deps_arch() {
+    sudo pacman -Sy --noconfirm --needed vim
+}
+
 _vim_clean_deps_arch() {
     sudo pacman -Rs --noconfirm vim
+}
+
+_vim_install_deps_macos() {
+    brew install vim
 }
 
 _vim_clean_deps_macos() {
