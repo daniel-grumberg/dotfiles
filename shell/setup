@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+_shell_pre_install() {
+    mkdir -p "${HOME}/.local/bin"
+}
+
 _shell_install_deps_arch() {
     sudo pacman -Sy --noconfim --needed xclip
 }
@@ -52,4 +56,8 @@ _shell_clean_files_arch() {
 _shell_clean_files_macos() {
     rm "${HOME}/.exports"
     rm "${HOME}/.git-prompt.sh"
+}
+
+_shell_post_clean() {
+    rm -rf "${HOME}/.local/bin"
 }
