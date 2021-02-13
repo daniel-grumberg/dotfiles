@@ -1,31 +1,31 @@
 #!/usr/bin/env bash
 
-_emacs_pre_install() {
-    mkdir -p "${HOME}/.emacs.d"
-}
-
 _emacs_install_deps_ubuntu() {
     sudo apt-get -y install emacs
-}
-
-_emacs_install_deps_arch() {
-    sudo pacman -Sy --noconfirm --needed emacs
-}
-
-_emacs_install_deps_macos() {
-    brew install --cask emacs
 }
 
 _emacs_clean_deps_ubuntu() {
     sudo apt-get -y remove emacs
 }
 
+_emacs_install_deps_arch() {
+    sudo pacman -Sy --noconfirm --needed emacs
+}
+
 _emacs_clean_deps_arch() {
     sudo pacman -Rs --noconfirm emacs
 }
 
+_emacs_install_deps_macos() {
+    brew install --cask emacs
+}
+
 _emacs_clean_deps_macos() {
     brew uninstall --cask emacs
+}
+
+_emacs_pre_install() {
+    mkdir -p "${HOME}/.emacs.d"
 }
 
 _emacs_link_files() {
