@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+_auracle_pre_install_arch() {
+    mkdir "${data_dir}/AURPackages"
+    ln -sf "${data_dir}/AURPackages" "${HOME}/AURPackages"
+}
+
+_auracle_install_deps_arch() {
+    pushd "${data_dir}/AURPackages"
+    git clone "https://github.com/falconindy/auracle.git" auracle-git
+    cd auracle-git
+    makepkg -si --needed --noconfirm
+    popd
+}
+
+_auracle_clean_deps_arch() {
+    pacman -Rs --noconfim auracle
+    rm -rf "${data_dir}/AURPackages/auracle-git"
+}
+
+_auracle_link_files_arch() {
+    ln -sf "${package_dir}/auracle-update" "${HOME}/.local/bin/auracle-update"
+}
+
+_auracle_clean_files_arch() {
+    rm "${HOME}/.local/bin/auracle-update"
+}
+
+_auracle_post_clean_arch() {
+    rm "${HOME}/AURPackages"
+    rm -rf "${data_dir}/AURPackages"
+}
+
+_auracle_install_deps() {
+    :;
+}
+
+_auracle_clean_deps() {
+    :;
+}
+
+_auracle_link_files() {
+    :;
+}
+
+_auracle_clean_files() {
+    :;
+}
+

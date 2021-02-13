@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -e
+
+build-package() {
+    pushd .
+    cd "${HOME}/AURPackages/${1}"
+    printf "=== Building package %s ===\n\n" "${1}"
+    makepkg -si --needed --noconfirm
+    popd
+}
+
+get-word() {
+    echo "${1}" | awk -v N="${2}" '{print $N}'
+}
+
+pushd "${HOME}/AURPackages"
+
+mapfile outdated < <(auracle sync -q)
+
+auracle update "${outdated[@]}"
+
+while read -r LINE ; do
+    case "$(get-word "${LINE}" 1)" in
+    TARGETAUR)
+        build-package "$(get-word "${LINE}" 3)"
+        ;;
+    *)
+        ;;
+    esac
+done < <(auracle buildorder "${outdated[@]}")
+
+popd
