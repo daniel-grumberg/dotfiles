@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+# This needs to be updated every now and then...
+iosevka_pkgver="5.0.1"
+
+iosevka_fonts=(
+    "ttf-iosevka"
+    "ttf-iosevka-aile"
+    "ttf-iosevka-etoile"
+    "ttf-iosevka-fixed"
+    "ttf-iosevka-slab"
+)
+
+_get_iosevka_fonts_ubuntu() {
+    local _tmpdir
+    _tmpdir="$(mktemp -d)"
+    pushd "${_tmpdir}"
+    for font_name in "$@"; do
+        wget "https://github.com/be5invis/Iosevka/releases/download/v${iosevka_pkgver}/${font_name}-${iosevka_pkgver}.zip"
+        unzip "${font_name}-${iosevka_pkgver}.zip" -d "${HOME}/.fonts/ttf"
+    done
+    popd
+    rm -rf "${_tmpdir}"
+}
+
+_fonts_pre_install_ubuntu() {
+    mkdir -p "${HOME}/.fonts/"
+    mkdir "${HOME}/.fonts/ttf/"
+}
+
+_fonts_install_deps_ubuntu() {
+    sudo apt-get -y install fontconfig
+    _get_iosevka_fonts_ubuntu "${iosevka_fonts[@]}"
+    sudo fc-cache -f -v
+}
+
+_fonts_clean_deps_ubuntu() {
+    sudo apt-get -y remove fontconfig
+}
+
+_fonts_post_clean_ubuntu() {
+    rm -rf "${HOME}/.fonts/"
+}
+
+_fonts_install_deps_arch() {
+    pushd "${data_dir}/AURPackages"
+    for font_name in "${iosevka_fonts[@]}"; do
+        auracle clone "${font_name}"
+        pushd "${font_name}"
+        makepkg -si --needed --noconfirm
+        popd
+    done
+    popd
+}
+
+_fonts_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm "${iosevka_fonts[@]}"
+    for font_name in "${iosevka_fonts[@]}"; do
+        auracle clone "${font_name}"
+        rm -rf "${font_name}"
+    done
+    popd
+}
+
+_fonts_install_deps() {
+    :;
+}
+
+_fonts_clean_deps() {
+    :;
+}
+
+_fonts_link_files() {
+    :;
+}
+
+_fonts_clean_files() {
+    :;
+}

@@ -314,13 +314,13 @@ macos_packages=(
 
 ubuntu_packages=(
     "linux_init"
+    "fonts" # linux_init is needed to install unzip
     "git"
     "ssh"
     "shell"
     "bash"
     "vim"
     "emacs"
-    "fonts" # ubuntu_init is needed to install unzip
 )
 
 if check_command "${1}"; then
