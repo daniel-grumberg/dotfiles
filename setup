@@ -300,7 +300,6 @@ arch_packages=(
     "auracle"
     "xorg"
     "i3_wm"
-    "dunst"
     "redshift"
 )
 
