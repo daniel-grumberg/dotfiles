@@ -7,6 +7,11 @@ _xorg_install_deps_arch() {
         fehbg                           \
         numlockx                        \
         rxvt-unicode
+    pushd "${data_dir}/AURPackages"
+    auracle clone urxvt-resize-font-git
+    cd "urxvt-resize-font-git"
+    makepkg -si --needed --noconfirm
+    popd
 }
 
 _xorg_link_files_arch() {
@@ -29,7 +34,10 @@ _xorg_clean_deps_arch() {
         xorg-xrdb               \
         fehbg                   \
         numlockx                \
-        rxvt-unicode
+        rxvt-unicode            \
+        urxvt-resize-font-git
+
+    rm -rf "${data_dir}/AURPackages/urxvt-resize-font-git"
 }
 
 _xorg_install_deps() {
