@@ -21,7 +21,7 @@ _arch_init_pre_install_arch() {
 }
 
 _arch_init_install_deps_arch() {
-    sudo pacman -Sy --needed --noconfirm xdg-user-dirs
+    sudo pacman -S --needed --noconfirm xdg-user-dirs
 }
 
 _arch_init_link_files_arch() {
