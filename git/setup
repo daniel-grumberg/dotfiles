@@ -24,6 +24,10 @@ _git_clean_deps_macos() {
     brew uninstall git
 }
 
+_git_pre_install() {
+    mkdir -p "${HOME}/VersionControlledDocuments"
+}
+
 _git_link_files() {
     ln -sf "${package_dir}/gitconfig" "${HOME}/.gitconfig"
     ln -sf "${package_dir}/global_gitignore" "${HOME}/.global_gitignore"
@@ -34,3 +38,6 @@ _git_clean_files() {
     rm "${HOME}/.global_gitignore"
 }
 
+_git_post_clean() {
+    rm -rm "${HOME}/VersionsControlledDocuments"
+}
