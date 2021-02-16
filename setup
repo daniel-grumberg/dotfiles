@@ -181,7 +181,7 @@ Commands:
 Options:
   -d DIR --data-dir    Use DIR as the directory to use for expected largish
     amounts of data (Primarily useful when using a separate filesystem for
-    storing non essential stuff).
+    storing non essential stuff). Default is $HOME/data.
   -l --links-only      Do not try to install or remove packages, just
   -v --verbose         Enable verbose mode
     setup/remove symlinks.
@@ -241,7 +241,7 @@ dotfiles="$(dirname "$(canonicalize)")"
 
 verbose="0"
 links_only="0"
-data_dir=""
+data_dir="${HOME}/data"
 while [[ "$#" -gt 0 ]]; do
     key="${1}"
     shift
