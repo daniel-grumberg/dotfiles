@@ -7,7 +7,7 @@ _auracle_pre_install_arch() {
 
 _auracle_install_deps_arch() {
     pushd "${data_dir}/AURPackages"
-    git clone "https://github.com/falconindy/auracle.git" auracle-git
+    git clone "https://aur.archlinux.org/auracle-git.git"
     cd auracle-git
     makepkg -si --needed --noconfirm
     popd
