@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 _linux_init_install_deps_ubuntu() {
-    sudo apt-get -y install xdg-user-dirs
+    sudo apt-get -y install xdg-user-dirs zip unzip
 }
 
 _linux_init_clean_deps_ubuntu() {
-    sudo apt-get -y remove xdg-user-dirs
+    sudo apt-get -y remove xdg-user-dirs zip unzip
 }
 
 _linux_init_install_deps_arch() {
