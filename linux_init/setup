@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 
-_arch_init_pre_install_arch() {
+_linux_init_install_deps_ubuntu() {
+    sudo apt-get -y install xdg-user-dirs
+}
+
+_linux_init_clean_deps_ubuntu() {
+    sudo apt-get -y remove xdg-user-dirs
+}
+
+_linux_init_install_deps_arch() {
+    sudo pacman -S --needed --noconfirm xdg-user-dirs
+}
+
+_linux_init_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm xdg-user-dirs
+}
+
+_linux_init_pre_install() {
    mkdir -p "${HOME}/.config"
    mkdir "${data_dir}/Cache"
    mkdir "${data_dir}/Desktop"
@@ -20,25 +36,25 @@ _arch_init_pre_install_arch() {
    ln -sf "${data_dir}/Videos" "${HOME}/Videos"
 }
 
-_arch_init_install_deps_arch() {
-    sudo pacman -S --needed --noconfirm xdg-user-dirs
+_linux_init_install_deps() {
+    :;
 }
 
-_arch_init_link_files_arch() {
+_linux_init_clean_deps() {
+    :;
+}
+
+_linux_init_link_files() {
    ln -sf "${package_dir}.user-dirs.dirs" "${HOME}/.config/user-dirs.dirs"
    ln -sf "${package_dir}.user-dirs.locale" "${HOME}/.config/user-dirs.locale"
 }
 
-_arch_init_clean_files() {
+_linux_init_clean_files() {
    rm "${HOME}/.config/user-dirs.dirs"
    rm "${HOME}/.config/user-dirs.locale"
 }
 
-_arch_init_clean_deps_arch() {
-    sudo pacman -Rs --noconfirm xdg-user-dirs
-}
-
-_arch_init_post_clean_arch() {
+_linux_init_post_clean() {
    rm "${HOME}/Cache"
    rm "${HOME}/Desktop"
    rm "${HOME}/Documents"
@@ -55,20 +71,4 @@ _arch_init_post_clean_arch() {
    rm -rf "${data_dir}/Public"
    rm -rf "${data_dir}/Templates"
    rm -rf "${data_dir}/Videos"
-}
-
-_arch-init_install_deps() {
-    :;
-}
-
-_arch-init_clean_deps() {
-    :;
-}
-
-_arch-init_link_files() {
-    :;
-}
-
-_arch-init_clean_files() {
-    :;
 }

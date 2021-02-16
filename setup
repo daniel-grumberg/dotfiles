@@ -287,14 +287,15 @@ esac
 # installed package installed in order to install a package put it
 # after the needed package.
 arch_packages=(
+    "linux_init" # Dummy package for specific system configuration
     "git"
     "ssh"
     "shell"
     "bash"
     "vim"
     "emacs"
-    "arch_init" # Dummy package for specific system configuration
     "auracle"
+    "fonts" # This is needs auracle as an install dependency
     "xorg"
     "dunst"
     "redshift"
@@ -308,15 +309,18 @@ macos_packages=(
     "bash"
     "vim"
     "emacs"
+    "fonts"
 )
 
 ubuntu_packages=(
+    "linux_init"
     "git"
     "ssh"
     "shell"
     "bash"
     "vim"
     "emacs"
+    "fonts" # ubuntu_init is needed to install unzip
 )
 
 if check_command "${1}"; then
