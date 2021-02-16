@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+_redshift_install_deps_arch() {
+    sudo pacman -S --neeeded --noconfirm redshift
+}
+
+_redshift_link_files_arch() {
+    ln -sf "${package_dir}/config-redshift" "${HOME}/.config/redshift"
+}
+
+_redshift_clean_files_arch() {
+    rm "${HOME}/.config/redshift"
+}
+
+_redshift_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm redshift
+}
+
+_redshift_install_deps() {
+    :;
+}
+
+_redshift_clean_deps() {
+    :;
+}
+
+_redshift_link_files() {
+    :;
+}
+
+_redshift_clean_files() {
+    :;
+}
