@@ -297,9 +297,9 @@ base_packages=(
 # an appropriately named array down here.
 arch_packages=(
     "arch_init" # Dummy package for specific system configuration
+    "auracle"
     "xorg"
     "i3_wm"
-    "auracle"
     "dunst"
     "redshift"
 )
