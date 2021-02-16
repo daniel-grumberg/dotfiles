@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+_xorg_install_deps_arch() {
+    sudo pacman -Sy --needed --noconfirm xorg
+    sudo pacman -Sy --needed --noconfirm xorg-xrdb
+    sudo pacman -Sy --needed --noconfirm fehbg
+    sudo pacman -Sy --needed --noconfirm numlockx
+    sudo pacman -Sy --needed --noconfirm rxvt-unicode
+}
+
+_xorg_link_files_arch() {
+    ln -sf "${package_dir}/xinitrc" "${HOME}/.xinitrc"
+    ln -sf "${package_dir}/Xmodmap" "${HOME}/.Xmodmap"
+    ln -sf "${package_dir/Xresources}" "${HOME}/.Xresources"
+    ln -sf "${package_dir/Xresources.d}" "${HOME}/.Xresources.d"
+}
+
+_xorg_clean_files_arch() {
+    rm "${HOME}/.xinitrc"
+    rm "${HOME}/.Xmodmap"
+    rm "${HOME}/.Xresources"
+    rm "${HOME}/.Xresources.d"
+}
+
+_xorg_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm rxvt-unicode
+    sudo pacman -Rs --noconfirm numlockx
+    sudo pacman -Rs --noconfirm fehbg
+    sudo pacman -Rs --noconfim xorg-xrdb
+    sudo pacman -Rs --noconfirm xorg
+}
+
+_xorg_install_deps() {
+    :;
+}
+
+_xorg_clean_deps() {
+    :;
+}
+
+_xorg_link_files() {
+    :;
+}
+
+_xorg_clean_files() {
+    :;
+}

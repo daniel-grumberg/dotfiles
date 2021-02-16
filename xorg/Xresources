@@ -1,0 +1,10 @@
+! Keep the include of nord first as it defines colors used in other includes
+#include ".Xresources.d/nord"
+#include ".Xresources.d/rxvt-unicode"
+
+Xft.autohint: 0
+Xft.antialias: true
+Xft.hinting: true
+Xft.rgba: rgb
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcdnone
