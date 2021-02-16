@@ -13,9 +13,7 @@
 ;; Allow finer grained resize of frames
 (setq frame-resize-pixelwise t)
 
-(defvar font-string (if (eq system-type 'darwin)
-                                 "Pragmata Pro Mono:size=14"
-                               "Iosevka:size=14"))
+(defvar font-string "Iosevka:size=14")
 
 (set-frame-font font-string t t)
 
