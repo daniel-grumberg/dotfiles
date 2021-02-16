@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
 _i3_wm_install_deps_arch() {
-    sudo pacman -S --needed --noconfirm i3-wm i3blocks i3lock i3status
+    sudo pacman -S --needed --noconfirm \
+         i3-wm                          \
+         i3blocks                       \
+         i3lock                         \
+         i3status
 }
 
 _i3_wm_link_files_arch() {
@@ -17,7 +21,11 @@ _i3_wm_clean_files_arch() {
 }
 
 _i3_wm_clean_deps_arch() {
-    sudo pacman -Rs --noconfirm i3-wm i3blocks i3lock i3status
+    sudo pacman -Rs --noconfirm \
+         i3-wm                  \
+         i3blocks               \
+         i3lock                 \
+         i3status
 }
 
 _i3_wm_install_deps() {

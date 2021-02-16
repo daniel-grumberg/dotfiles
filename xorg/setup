@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
 _xorg_install_deps_arch() {
-    sudo pacman -S --needed --noconfirm xorg
-    sudo pacman -S --needed --noconfirm xorg-xrdb
-    sudo pacman -S --needed --noconfirm fehbg
-    sudo pacman -S --needed --noconfirm numlockx
-    sudo pacman -S --needed --noconfirm rxvt-unicode
+    sudo pacman -S --needed --noconfirm \
+        xorg                            \
+        xorg-xrdb                       \
+        fehbg                           \
+        numlockx                        \
+        rxvt-unicode
 }
 
 _xorg_link_files_arch() {
@@ -23,11 +24,12 @@ _xorg_clean_files_arch() {
 }
 
 _xorg_clean_deps_arch() {
-    sudo pacman -Rs --noconfirm rxvt-unicode
-    sudo pacman -Rs --noconfirm numlockx
-    sudo pacman -Rs --noconfirm fehbg
-    sudo pacman -Rs --noconfim xorg-xrdb
-    sudo pacman -Rs --noconfirm xorg
+    sudo pacman -Rs --noconfirm \
+        xorg                    \
+        xorg-xrdb               \
+        fehbg                   \
+        numlockx                \
+        rxvt-unicode
 }
 
 _xorg_install_deps() {
