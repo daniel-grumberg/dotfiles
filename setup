@@ -71,8 +71,6 @@ setup_packages() {
 }
 
 init_system() {
-    setup_packages "${base_packages[@]}"
-
    # When setting up for a new host OS/distribution, add a case here to setup
    # the specific packages. You could probably hack something together with
    # eval, but the risk is not worth it, since there should not be that many
@@ -284,18 +282,17 @@ case "${OSTYPE}" in
         ;;
 esac
 
-base_packages=(
+# When setting up for a new host OS/distribution, put any specific packages in
+# an appropriately named array down here. If you need a previously
+# installed package installed in order to install a package put it
+# after the needed package.
+arch_packages=(
     "git"
     "ssh"
     "shell"
     "bash"
     "vim"
     "emacs"
-)
-
-# When setting up for a new host OS/distribution, put any specific packages in
-# an appropriately named array down here.
-arch_packages=(
     "arch_init" # Dummy package for specific system configuration
     "auracle"
     "xorg"
@@ -304,9 +301,23 @@ arch_packages=(
     "i3_wm"
 )
 
-macos_packages=()
+macos_packages=(
+    "git"
+    "ssh"
+    "shell"
+    "bash"
+    "vim"
+    "emacs"
+)
 
-ubuntu_packages=()
+ubuntu_packages=(
+    "git"
+    "ssh"
+    "shell"
+    "bash"
+    "vim"
+    "emacs"
+)
 
 if check_command "${1}"; then
     if [[ "${verbose}" -eq "1" ]]; then
