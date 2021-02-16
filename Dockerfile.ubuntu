@@ -25,6 +25,6 @@ COPY --chown=tester ./ /home/tester/dotfiles
 WORKDIR /home/tester/dotfiles
 
 # Run setup
-RUN ["./setup", "-d", "init_system"]
+RUN ["./setup", "init_system"]
 
 CMD ["/bin/bash"]
