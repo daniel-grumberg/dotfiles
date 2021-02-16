@@ -299,8 +299,8 @@ arch_packages=(
     "arch_init" # Dummy package for specific system configuration
     "auracle"
     "xorg"
-    "i3_wm"
     "redshift"
+    "i3_wm"
 )
 
 macos_packages=()
