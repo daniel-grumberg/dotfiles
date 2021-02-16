@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+_arch_init_pre_install_arch() {
+   mkdir -p "${HOME}/.config"
+   mkdir "${data_dir}/Cache"
+   mkdir "${data_dir}/Desktop"
+   mkdir "${data_dir}/Documents"
+   mkdir "${data_dir}/Music"
+   mkdir "${data_dir}/Pictures"
+   mkdir "${data_dir}/Public"
+   mkdir "${data_dir}/Templates"
+   mkdir "${data_dir}/Videos"
+   ln -sf "${data_dir}/Cache" "${HOME}/Cache"
+   ln -sf "${data_dir}/Desktop" "${HOME}/Desktop"
+   ln -sf "${data_dir}/Documents" "${HOME}/Documents"
+   ln -sf "${data_dir}/Music" "${HOME}/Music"
+   ln -sf "${data_dir}/Pictures" "${HOME}/Pictures"
+   ln -sf "${data_dir}/Public" "${HOME}/Public"
+   ln -sf "${data_dir}/Templates" "${HOME}/Templates"
+   ln -sf "${data_dir}/Videos" "${HOME}/Videos"
+}
+
+_arch_init_install_deps_arch() {
+    sudo pacman -Sy --needed --noconfirm xdg-user-dirs
+}
+
+_arch_init_link_files_arch() {
+   ln -sf "${package_dir}.user-dirs.dirs" "${HOME}/.config/user-dirs.dirs"
+   ln -sf "${package_dir}.user-dirs.locale" "${HOME}/.config/user-dirs.locale"
+}
+
+_arch_init_clean_files() {
+   rm "${HOME}/.config/user-dirs.dirs"
+   rm "${HOME}/.config/user-dirs.locale"
+}
+
+_arch_init_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm xdg-user-dirs
+}
+
+_arch_init_post_clean_arch() {
+   rm "${HOME}/Cache"
+   rm "${HOME}/Desktop"
+   rm "${HOME}/Documents"
+   rm "${HOME}/Music"
+   rm "${HOME}/Pictures"
+   rm "${HOME}/Public"
+   rm "${HOME}/Templates"
+   rm "${HOME}/Videos"
+   rm -rf "${data_dir}/Cache"
+   rm -rf "${data_dir}/Desktop"
+   rm -rf "${data_dir}/Documents"
+   rm -rf "${data_dir}/Music"
+   rm -rf "${data_dir}/Pictures"
+   rm -rf "${data_dir}/Public"
+   rm -rf "${data_dir}/Templates"
+   rm -rf "${data_dir}/Videos"
+}
+
+_arch-init_install_deps() {
+    :;
+}
+
+_arch-init_clean_deps() {
+    :;
+}
+
+_arch-init_link_files() {
+    :;
+}
+
+_arch-init_clean_files() {
+    :;
+}
