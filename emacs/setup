@@ -9,7 +9,7 @@ _emacs_clean_deps_ubuntu() {
 }
 
 _emacs_install_deps_arch() {
-    sudo pacman -Sy --noconfirm --needed emacs
+    sudo pacman -S --noconfirm --needed emacs
 }
 
 _emacs_clean_deps_arch() {

@@ -9,7 +9,7 @@ _git_clean_deps_ubuntu() {
 }
 
 _git_install_deps_arch() {
-    sudo pacman -Sy --noconfirm --needed git
+    sudo pacman -S --noconfirm --needed git
 }
 
 _git_clean_deps_arch() {

@@ -9,7 +9,7 @@ _vim_clean_deps_ubuntu() {
 }
 
 _vim_install_deps_arch() {
-    sudo pacman -Sy --noconfirm --needed vim
+    sudo pacman -S --noconfirm --needed vim
 }
 
 _vim_clean_deps_arch() {

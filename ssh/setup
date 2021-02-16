@@ -9,7 +9,7 @@ _ssh_install_deps_ubuntu() {
 }
 
 _ssh_install_deps_arch() {
-    sudo pacman -Sy --noconfirm --needed openssh
+    sudo pacman -S --noconfirm --needed openssh
 }
 
 _ssh_clean_deps_arch() {
