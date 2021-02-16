@@ -298,7 +298,7 @@ base_packages=(
 arch_packages=(
     "arch_init" # Dummy package for specific system configuration
     "xorg"
-    "i3"
+    "i3_wm"
     "auracle"
     "dunst"
     "redshift"
