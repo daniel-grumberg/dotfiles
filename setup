@@ -315,7 +315,7 @@ if check_command "${1}"; then
         # Show commands after full expansions have occured
         set -x
     fi
-    [[ -n "${data_dir}" && -d "${data_dir}" ]] || mkdir -p "${data_dir}"
+    [[ -n "${data_dir}" && ! -d "${data_dir}" ]] && mkdir -p "${data_dir}"
     "$@"
 else
     usage
