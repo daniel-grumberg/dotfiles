@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+_dunst_install_deps_arch() {
+    sudo pacman -S --needed --noconfirm dunst
+}
+
+_dunst_link_files_arch() {
+    ln -sf "${package_dir}/config-dunst" "${HOME}/.config/dunst"
+}
+
+_dunst_clean_files_arch() {
+    rm "${HOME}/.config/dunst"
+}
+
+_dunst_clean_deps_arch() {
+    sudo pacman -Rs --noconfirm dunst
+}
+
+_dunst_install_deps() {
+    :;
+}
+
+_dunst_clean_deps() {
+    :;
+}
+
+_dunst_link_files() {
+    :;
+}
+
+_dunst_clean_files() {
+    :;
+}
