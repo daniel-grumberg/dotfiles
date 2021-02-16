@@ -296,10 +296,10 @@ base_packages=(
 # When setting up for a new host OS/distribution, put any specific packages in
 # an appropriately named array down here.
 arch_packages=(
-    "auracle"
+    "arch_init" # Dummy package for specific system configuration
     "xorg"
     "i3"
-    "urxvt"
+    "auracle"
     "dunst"
     "redshift"
 )
