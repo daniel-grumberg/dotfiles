@@ -18,7 +18,15 @@ _xorg_link_files_arch() {
     ln -sf "${package_dir}/xinitrc" "${HOME}/.xinitrc"
     ln -sf "${package_dir}/Xmodmap" "${HOME}/.Xmodmap"
     ln -sf "${package_dir/Xresources}" "${HOME}/.Xresources"
-    ln -sf "${package_dir/Xresources.d}" "${HOME}/.Xresources.d"
+    ln -sf "${package_dir}/Xresources.d" "${HOME}/.Xresources.d"
+    case "$(xdpyinfo | awk '/dimensions/ {print $2}')" in
+        2560x1080)
+            ln -sf "${package_dir}/Wallpapers/WidescreenWallpaper.png" "${HOME}/Pictures/Wallpaper.png"
+            ;;
+        *)
+            ;;
+    esac
+    ln -sf "${package_dir}/fehbg" "${HOME}/.fehbg"
 }
 
 _xorg_clean_files_arch() {
@@ -26,6 +34,8 @@ _xorg_clean_files_arch() {
     rm "${HOME}/.Xmodmap"
     rm "${HOME}/.Xresources"
     rm "${HOME}/.Xresources.d"
+    rm "${HOME}/Pictures/Wallpaper.png"
+    rm "${HOME}/.fehbg"
 }
 
 _xorg_clean_deps_arch() {
