@@ -110,25 +110,26 @@ clean_packages() {
 }
 
 clean_system() {
-    clean "${base_packages[@]}"
-
+    local _package_list
    # When setting up for a new host OS/distribution, add a case here to clean
    # the specific packages. You could probably hack something together with
    # eval, but the risk is not worth it, since there should not be that many
    # different host types.
     case "${hosttype}" in
         arch)
-            clean "${arch_packages[@]}"
+            mapfile -d '' _package_list < <(printf "%s\0" "${arch_packages[@]}" | tac -s '')
             ;;
         ubuntu)
-            clean "${ubuntu_packages[@]}"
+            mapfile -d '' _package_list < <(printf "%s\0" "${ubuntu_packages[@]}" | tac -s '')
             ;;
         macos)
-            clean "${macos_packages[@]}"
+            mapfile -d '' _package_list < <(printf "%s\0" "${macos_packages[@]}" | tac -s '')
             ;;
         *)
         ;;
     esac
+
+    clean "${_package_list[@]}"
 }
 
 create_package_templates() {
