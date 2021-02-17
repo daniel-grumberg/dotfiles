@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/usr/bin/env bash
 
 lock() {
     PICTURES=$(xdg-user-dir PICTURES)
