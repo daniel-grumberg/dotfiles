@@ -1,0 +1,17 @@
+FROM archlinux:base-devel
+
+RUN pacman -Syu --noconfirm sudo && \
+    useradd -m -s /bin/bash tester && \
+    usermod -aG wheel tester && \
+    echo "%wheel   ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers
+
+USER tester
+ENV HOME /home/tester
+
+COPY --chown=tester ./ ./home/tester/dotfiles
+
+WORKDIR /home/tester/dotfiles
+
+RUN ["./setup", "init_system"]
+
+CMD ["/bin/bash"]
