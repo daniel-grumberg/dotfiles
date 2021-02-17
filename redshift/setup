@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 _redshift_install_deps_arch() {
-    sudo pacman -S --neeeded --noconfirm redshift
+    sudo pacman -S --needed --noconfirm redshift
 }
 
 _redshift_link_files_arch() {
