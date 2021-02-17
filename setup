@@ -207,10 +207,8 @@ check_command() {
 
 # This is inteded to execute in a subshell.
 canonicalize() {
-    # Start with what is in the path, otherwise use $0 as a starting point.
     local _target_file
-    _target_file="$(which "$0")"
-    [[ -z "${_target_file}" ]] && _target_file="$0"
+    _target_file="${0}"
 
     case "${hosttype}" in
         *linux)
