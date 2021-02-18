@@ -1,5 +1,20 @@
 FROM archlinux/archlinux:base-devel
 
+# TODO: Remove this once the underlying issue is resolved.  The
+# details are:
+# - recently glibc was updated to 2.33, build against
+#  linux-api-headers (v5.10)
+# - effectively making the new system call faccessat2 a hard
+# requirement
+# - This is breaking on GitHub actions because the runners use an
+# older LTS kernel.
+# This patch was found on the internet, once this issue is solved
+# upstream, this should be removed.
+RUN uname -r | test "$(cut -d '.' -f 2)" -ge "10" || \
+    sh -c 'patched_glibc=glibc-linux4-2.33-4-x86_64.pkg.tar.zst && \
+    curl -LO "https://repo.archlinuxcn.org/x86_64/$patched_glibc" && \
+    bsdtar -C / -xvf "$patched_glibc"'
+
 RUN pacman -Syu --noconfirm sudo && \
     useradd -m -s /bin/bash tester && \
     usermod -aG wheel tester && \
