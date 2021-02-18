@@ -148,10 +148,6 @@ _${package}_install_deps() {
     :;
 }
 
-_${package}_clean_deps() {
-    :;
-}
-
 _${package}_link_files() {
     :;
 }
@@ -159,6 +155,11 @@ _${package}_link_files() {
 _${package}_clean_files() {
     :;
 }
+
+_${package}_clean_deps() {
+    :;
+}
+
 EOF
     done
 }
