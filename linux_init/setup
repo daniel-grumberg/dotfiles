@@ -26,6 +26,7 @@ _linux_init_clean_deps_arch() {
 
 _linux_init_pre_install() {
    mkdir -p "${HOME}/.config"
+   mkdir -p "${HOME}/.config/systemd/user"
    mkdir "${data_dir}/Cache"
    mkdir "${data_dir}/Desktop"
    mkdir "${data_dir}/Documents"
@@ -79,4 +80,5 @@ _linux_init_post_clean() {
    rm -rf "${data_dir}/Public"
    rm -rf "${data_dir}/Templates"
    rm -rf "${data_dir}/Videos"
+   rm -rf "${HOME}/.config"
 }
