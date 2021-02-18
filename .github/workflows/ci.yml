@@ -18,17 +18,11 @@ jobs:
   linux-build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         host: ['ubuntu', 'arch']
 
     steps:
-      # This is a fix for random "Error: The operation was canceled"
-      - name: Make some room in the instance
-        run: |
-          sudo rm -rf "/usr/share/dotnet" || true
-          sudo rm -rf "/opt/ghc" || true
-          sudo rm -rf "/usr/local/share/boost" || true
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY" || true
       - name: Checkout code
         uses: actions/checkout@v2
 
