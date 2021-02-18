@@ -1,4 +1,4 @@
-FROM archlinux:base-devel
+FROM archlinux/archlinux:base-devel
 
 RUN pacman -Syu --noconfirm sudo && \
     useradd -m -s /bin/bash tester && \
