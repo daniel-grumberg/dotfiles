@@ -61,7 +61,7 @@ setup_packages() {
         execute_if_exists "_${package}_pre_install_${hosttype}" || true
         if [[ "${links_only}" -eq "0" ]]; then
             execute_if_exists "_${package}_install_deps_${hosttype}" \
-                || execute "_${package}_install_deps"
+                || execute_if_exists "_${package}_install_deps" || true
         fi
         execute_if_exists "_${package}_link_files_${hosttype}" \
             || execute "_${package}_link_files"
