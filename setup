@@ -71,23 +71,7 @@ setup_packages() {
 }
 
 init_system() {
-   # When setting up for a new host OS/distribution, add a case here to setup
-   # the specific packages. You could probably hack something together with
-   # eval, but the risk is not worth it, since there should not be that many
-   # different host types.
-    case "${hosttype}" in
-        arch)
-            setup_packages "${arch_packages[@]}"
-            ;;
-        ubuntu)
-            setup_packages "${ubuntu_packages[@]}"
-            ;;
-        macos)
-            setup_packages "${macos_packages[@]}"
-            ;;
-        *)
-        ;;
-    esac
+    eval "setup_packages \"\${${hosttype}_packages[@]}\""
 }
 
 clean_packages() {
@@ -111,24 +95,8 @@ clean_packages() {
 
 clean_system() {
     local _package_list
-   # When setting up for a new host OS/distribution, add a case here to clean
-   # the specific packages. You could probably hack something together with
-   # eval, but the risk is not worth it, since there should not be that many
-   # different host types.
-    case "${hosttype}" in
-        arch)
-            mapfile -d '' _package_list < <(printf "%s\0" "${arch_packages[@]}" | tac -s '')
-            ;;
-        ubuntu)
-            mapfile -d '' _package_list < <(printf "%s\0" "${ubuntu_packages[@]}" | tac -s '')
-            ;;
-        macos)
-            mapfile -d '' _package_list < <(printf "%s\0" "${macos_packages[@]}" | tac -s '')
-            ;;
-        *)
-        ;;
-    esac
-
+    # This is kinda of horrible but it is constrained to one place
+    mapfile -d '' _package_list < <(eval "printf '%s\0' \"\${${hosttype}_arr[@]}\"" | tac -s '')
     clean "${_package_list[@]}"
 }
 
@@ -286,6 +254,9 @@ esac
 # an appropriately named array down here. If you need a previously
 # installed package installed in order to install a package put it
 # after the needed package.
+
+# Ignore unused variable warning
+# shellcheck disable=2034
 arch_packages=(
     "linux_init" # Dummy package for specific system configuration
     "git"
@@ -302,6 +273,8 @@ arch_packages=(
     "i3_wm"
 )
 
+# Ignore unused variable warning
+# shellcheck disable=2034
 macos_packages=(
     "git"
     "ssh"
@@ -312,6 +285,8 @@ macos_packages=(
     "fonts"
 )
 
+# Ignore unused variable warning
+# shellcheck disable=2034
 ubuntu_packages=(
     "linux_init"
     "fonts" # linux_init is needed to install unzip
