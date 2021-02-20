@@ -26,6 +26,7 @@ _git_clean_deps_macos() {
 
 _git_pre_install() {
     mkdir -p "${HOME}/VersionControlledDocuments"
+    mkdir -p "${HOME}/VersionControlledDocuments/worktrees"
 }
 
 _git_link_files() {
@@ -39,5 +40,5 @@ _git_clean_files() {
 }
 
 _git_post_clean() {
-    rm -rm "${HOME}/VersionsControlledDocuments"
+    rm -rf "${HOME}/VersionsControlledDocuments"
 }
