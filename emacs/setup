@@ -37,7 +37,7 @@ _emacs_link_files() {
 }
 
 _emacs_post_install() {
-    emacs -nw --eval "(progn (pdf-tools-install 1) (all-the-icons-install-fonts 1) (kill-emacs))"
+    emacs --eval "(progn (pdf-tools-install 1) (all-the-icons-install-fonts 1) (kill-emacs))" &
 }
 
 _emacs_clean_files() {
