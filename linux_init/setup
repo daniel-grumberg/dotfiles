@@ -54,8 +54,8 @@ _linux_init_clean_deps() {
 }
 
 _linux_init_link_files() {
-   ln -sf "${package_dir}.user-dirs.dirs" "${HOME}/.config/user-dirs.dirs"
-   ln -sf "${package_dir}.user-dirs.locale" "${HOME}/.config/user-dirs.locale"
+   ln -sf "${package_dir}/user-dirs.dirs" "${HOME}/.config/user-dirs.dirs"
+   ln -sf "${package_dir}/user-dirs.locale" "${HOME}/.config/user-dirs.locale"
 }
 
 _linux_init_clean_files() {
