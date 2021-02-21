@@ -80,16 +80,16 @@ clean_packages() {
 
         export package_dir="${dotfiles}/${package}"
 
-        execute_if_exists "_${_package}_pre_clean" || true
-        execute_if_exists "_${_package}_pre_clean${hosttype}" || true
+        execute_if_exists "_${package}_pre_clean" || true
+        execute_if_exists "_${package}_pre_clean${hosttype}" || true
         execute_if_exists "_${package}_clean_files_${hosttype}" \
-            || execute "_${_package}_clean_files"
+            || execute "_${package}_clean_files"
         if [[ "${links_only}" -eq "0" ]]; then
-            execute_if_exists "_${_package}_clean_deps_${hosttype}" \
-                || execute_if_exists "_${_package}_clean_deps" || true
+            execute_if_exists "_${package}_clean_deps_${hosttype}" \
+                || execute_if_exists "_${package}_clean_deps" || true
         fi
-        execute_if_exists "_package_post_clean_${hosttype}" || true
-        execute_if_exists "_${_package}_post_clean" || true
+        execute_if_exists "_${package}_post_clean_${hosttype}" || true
+        execute_if_exists "_${package}_post_clean" || true
     done
 }
 
