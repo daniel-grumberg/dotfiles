@@ -48,6 +48,7 @@
     (dang/python-support . "python-support")
     (dang/latex-support . "latex-support")
     (dang/llvm-support . "llvm-support")
+    (dang/yaml-support . "yaml-support")
     (dang/tablegen-support . "tablegen-support")
     (dang/z3-support . "z3-support"))
   "Association list of language support features and filenames where to find them within the custom-config directory")
