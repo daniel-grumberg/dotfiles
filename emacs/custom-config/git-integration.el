@@ -13,6 +13,3 @@
     "S" '(magit-stage :wk "stage-file")
     "m" '(magit-dispatch-popup :wk "dispatch")
     "U" '(magit-unstage-file :wk "unstage-file")))
-
-(use-package evil-magit
-  :after (magit evil))
