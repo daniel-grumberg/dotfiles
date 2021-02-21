@@ -48,7 +48,7 @@
                                       (if face 'font-lock-warning-face
                                         'font-lock-builtin-face))))
                 '(:eval evil-mode-line-tag)
-                " L%l "
+                " %l:%c "
                 ;; relative position, size of file
                 " ["
                 (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
