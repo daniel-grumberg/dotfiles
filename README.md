@@ -1,3 +1,5 @@
+[![CI](https://github.com/daniel-grumberg/dotfiles/actions/workflows/ci.yml/badge.svg)](https://github.com/daniel-grumberg/dotfiles/actions/workflows/ci.yml)
+
 # dotfiles
 
 This is my new dotfiles setup and infrastructure.
