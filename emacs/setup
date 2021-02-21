@@ -32,6 +32,12 @@ _emacs_link_files() {
     ln -sf "${package_dir}/init.el" "${HOME}/.emacs.d/init.el"
     ln -sf "${package_dir}/custom-config" "${HOME}/.emacs.d/custom-config"
     ln -sf "${package_dir}/snippets" "${HOME}/.emacs.d/snippets"
+    # TODO find a way to install use-package and all-the-icons-fonts
+    # using emacs --batch --eval
+}
+
+_emacs_post_install() {
+    emacs -nw --eval "(progn (pdf-tools-install 1) (all-the-icons-install-fonts 1) (kill-emacs))"
 }
 
 _emacs_clean_files() {
