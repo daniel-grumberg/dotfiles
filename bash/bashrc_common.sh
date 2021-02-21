@@ -2,7 +2,13 @@ source "${HOME}/.exports"
 
 [[ ! "$-" =~ "i" ]] && return
 
-source "${HOME}/.git-prompt.sh"
+if [[ -f "${HOME}/.git-prompt.sh" ]]; then
+    source "${HOME}/.git-prompt.sh"
+fi
+
+if [[ -f "${HOME}/.aliases" ]]; then
+    source "${HOME}/.aliases"
+fi
 
 set_prompt()
 {
