@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+_sound_linux_install_deps_arch() {
+    sudo pacman -S --needed --noconfirm pulseaudio-alsa pavucontrol
+}
+
+_sound_linux_link_files_arch() {
+    ln -sf "${package_dir}/volumectl" "${HOME}/.local/bin/volumectl"
+}
+
+_sound_linux_clean_files_arch() {
+    rm "${HOME}/.local/bin/volumectl"
+}
+
+_sound_linux_clean_deps() {
+    sudo pacman -Rs --noconfirm pulseaudio-alsa pavucontrol
+}
+
+_sound_linux_install_deps() {
+    :;
+}
+
+_sound_linux_link_files() {
+    :;
+}
+
+_sound_linux_clean_files() {
+    :;
+}
+
+_sound_linux_clean_deps() {
+    :;
+}
+

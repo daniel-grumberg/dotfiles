@@ -269,6 +269,7 @@ arch_packages=(
     "auracle"
     "fonts" # This is needs auracle as an install dependency
     "xorg"
+    "sound_linux"
     "dunst"
     "redshift"
     "i3_wm"
