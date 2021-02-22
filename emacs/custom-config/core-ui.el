@@ -25,8 +25,8 @@
   (add-to-list 'default-frame-alist '(ns-appearance . light)))
 
 ;; Theme
-(use-package nord-theme
-  :config (load-theme 'nord t))
+(use-package gruvbox-theme
+  :config (load-theme 'gruvbox t))
 
 (use-package all-the-icons)
 (use-package all-the-icons-dired
