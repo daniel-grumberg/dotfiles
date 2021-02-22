@@ -1,0 +1,20 @@
+urxvt.termName: rxvt-unicode
+
+urxvt.saveLines: 10000
+urxvt.cursorBlink: true
+
+urxvt.perl-ext-common: default,matcher,font-size,resize-font
+
+urxvt.urlLauncher: /usr/bin/firefox
+urxvt.matcher.button: 1
+
+urxvt.font: xft:Iosevka:pixelsize=14
+urxvt.boldFont: xft:Iosevka:pixelsize=14:weight=bold
+
+URxvt.intensityStyles: false
+
+! scrollbar
+URxvt.scrollstyle: plain
+URxvt*scrollBar_right: true
+URxvt.scrollColor: base05
+URxvt.troughColor: #FFFFD8

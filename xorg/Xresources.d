@@ -1,1 +1,0 @@
-/home/dang/dotfiles/system-specific/arch_linux.d/Xresources.d

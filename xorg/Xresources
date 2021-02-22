@@ -1,5 +1,5 @@
-! Keep the include of nord first as it defines colors used in other includes
-#include ".Xresources.d/nord"
+! Keep the include of gruvbox first as it defines colors used in other includes
+#include ".Xresources.d/gruvbox"
 #include ".Xresources.d/rxvt-unicode"
 
 Xft.autohint: 0

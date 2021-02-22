@@ -1,0 +1,1 @@
+/home/dang/dotfiles/xorg/Xresources.d
