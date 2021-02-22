@@ -231,10 +231,10 @@ bindsym --release Print exec "scrot '/home/dang/Pictures/Screenshots/%F_%H_%M_%S
 bindsym --release Shift+Print exec "scrot -s '/home/dang/Pictures/Screenshots/%F_%H_%M_%S.png'"
 
 mode "media" {
-    bindsym k exec "volumectl up",
-    bindsym j exec "volumectl down",
+    bindsym k exec "volumectl volume_up",
+    bindsym j exec "volumectl volume_down",
     bindsym m exec "volumectl mute",
-    bindsym Shift+m exec "volumectl mic-mute",
+    bindsym Shift+m exec "volumectl mic_mute",
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -246,8 +246,8 @@ bindsym $mod+m mode "media"
 bindsym XF86AudioPlay exec "playerctl play-pause"
 bindsym XF86AudioPrev exec "playerctl previous"
 bindsym XF86AudioNext exec "playerctl next"
-bindsym XF86AudioLowerVolume exec "volumectl down"
-bindsym XF86AudioRaiseVolume exec "volumectl up"
+bindsym XF86AudioLowerVolume exec "volumectl volume_down"
+bindsym XF86AudioRaiseVolume exec "volumectl volume_up"
 bindsym XF86AudioMute exec "volumectl mute"
 
 # Ensure emacs is always tabbed

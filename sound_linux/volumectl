@@ -11,6 +11,8 @@ COMMANDS:
 The default CHANGE is 5 and the default sink is the last connected device.
     volume_down [CHANGE] [SINK]  Decrease the volume of SINK by CHANGE percent.
 The default CHANGE is 5 and the default sink is the last connected device.
+    mic_mute [SOURCE]            Mute the input SOURCE. The default source is
+the last connected device.
     mute [SINK]                  Mute the selected SINK. The default sink is the
 last connected device.
     help                         Print this message and exit.
@@ -19,6 +21,10 @@ EOF
 
 get_last_connected_sink() {
     pactl list short sinks | tail -n1 | cut -f 1
+}
+
+get_last_connected_source() {
+    pactl list short sources | tail -n1 | cut -f 1
 }
 
 validate_change() {
@@ -31,11 +37,20 @@ validate_change() {
     fi
 }
 
-validate_sink() {
-    if [[ "${1}" =~ ^[0-9]+$ ]]; then
+validate_device() {
+    local _device_type
+    if [[ ! "${1}" =~ ^(source|sink)$ ]]; then
+        echo "Invalid device type ${1}"
+        exit 1
+    fi
+    _device_type="${1}"
+    local _device_number
+    _device_number="${2}"
+
+    if pactl list short "${1}s" | cut -f 1 | grep "${2}" &> /dev/null; then
         return 0
     else
-        echo "Invalid sink"
+        echo "Invalid ${_device_type} ${_device_number}"
         usage_msg
         exit 1
     fi
@@ -47,11 +62,11 @@ volume_up() {
     _change="5"
     _sink="$(get_last_connected_sink)"
     if [[ -n "${1}" ]]; then
-        validate_change "${1}" && _change="${1}"
+        validate_device sink "${1}" && _sink="${1}"
     fi
 
     if [[ -n "${2}" ]]; then
-        validate_sink"${2}" && _change="${2}"
+        validate_change "${2}" && _change="${2}"
     fi
 
     pactl set-sink-volume "${_sink}" "+${_change}%"
@@ -63,21 +78,31 @@ volume_down() {
     _change="5"
     _sink="$(get_last_connected_sink)"
     if [[ -n "${1}" ]]; then
-        validate_change "${1}" && _change="${1}"
+        validate_device sink "${1}" && _sink="${1}"
     fi
 
     if [[ -n "${2}" ]]; then
-        validate_sink"${2}" && _change="${2}"
+        validate_change "${2}" && _change="${2}"
     fi
 
     pactl set-sink-volume "${_sink}" "-${_change}%"
+}
+
+mic_mute() {
+    local _source
+    _source="$$(get_last_connected_source)"
+    if [[ -n "${1}" ]]; then
+        validate_device source "${1}" && _source="${1}"
+    fi
+
+    pactl set-source-mute "${_source}" toggle
 }
 
 mute() {
     local _sink
     _sink="$(get_last_connected_sink)"
     if [[ -n "${1}" ]]; then
-        validate_sink"${1}" && _change="${1}"
+        validate_device sink "${1}" && _sink="${1}"
     fi
 
     pactl set-sink-mute "${_sink}" toggle
@@ -91,6 +116,7 @@ usage() {
 commands=(
     volume_up
     volume_down
+    mic_mute
     mute
     usage
 )
