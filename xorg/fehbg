@@ -1,2 +1,2 @@
-#!/usr/bin/env/bash
+#!/usr/bin/env bash
 feh --no-fehbg --bg-center "${HOME}/Pictures/Wallpaper.png"
