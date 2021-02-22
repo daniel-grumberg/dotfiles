@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+
+usage_msg() {
+    cat<<EOF
+volumectl COMMAND [ARGS...]
+
+Convenience script to manipulate pactl volume
+
+COMMANDS:
+    volume_up [CHANGE] [SINK]    Augment the volume of SINK by CHANGE percent.
+The default CHANGE is 5 and the default sink is the last connected device.
+    volume_down [CHANGE] [SINK]  Decrease the volume of SINK by CHANGE percent.
+The default CHANGE is 5 and the default sink is the last connected device.
+    mute [SINK]                  Mute the selected SINK. The default sink is the
+last connected device.
+    help                         Print this message and exit.
+EOF
+}
+
+get_last_connected_sink() {
+    pactl list short sinks | tail -n1 | cut -f 1
+}
+
+validate_change() {
+    if [[ "${1}" -gt "0" && "${1}" -lt "100" ]]; then
+        return 0
+    else
+        echo "Invalid change value"
+        usage_msg
+        exit 1
+    fi
+}
+
+validate_sink() {
+    if [[ "${1}" =~ ^[0-9]+$ ]]; then
+        return 0
+    else
+        echo "Invalid sink"
+        usage_msg
+        exit 1
+    fi
+}
+
+volume_up() {
+    local _sink
+    local _change
+    _change="5"
+    _sink="$(get_last_connected_sink)"
+    if [[ -n "${1}" ]]; then
+        validate_change "${1}" && _change="${1}"
+    fi
+
+    if [[ -n "${2}" ]]; then
+        validate_sink"${2}" && _change="${2}"
+    fi
+
+    pactl set-sink-volume "${_sink}" "+${_change}%"
+}
+
+volume_down() {
+    local _sink
+    local _change
+    _change="5"
+    _sink="$(get_last_connected_sink)"
+    if [[ -n "${1}" ]]; then
+        validate_change "${1}" && _change="${1}"
+    fi
+
+    if [[ -n "${2}" ]]; then
+        validate_sink"${2}" && _change="${2}"
+    fi
+
+    pactl set-sink-volume "${_sink}" "-${_change}%"
+}
+
+mute() {
+    local _sink
+    _sink="$(get_last_connected_sink)"
+    if [[ -n "${1}" ]]; then
+        validate_sink"${1}" && _change="${1}"
+    fi
+
+    pactl set-sink-mute "${_sink}" toggle
+}
+
+usage() {
+    usage_msg
+    exit 0
+}
+
+commands=(
+    volume_up
+    volume_down
+    mute
+    usage
+)
+
+check_command() {
+    for c in "${commands[@]}"; do
+        [[ "${1}" = "${c}" ]] && return 0
+    done
+    return 1
+}
+
+if check_command "${1}"; then
+    "$@"
+else
+    usage_msg
+    exit 1
+fi
