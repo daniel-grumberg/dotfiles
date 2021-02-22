@@ -17,7 +17,7 @@ _xorg_install_deps_arch() {
 _xorg_link_files_arch() {
     ln -sf "${package_dir}/xinitrc" "${HOME}/.xinitrc"
     ln -sf "${package_dir}/Xmodmap" "${HOME}/.Xmodmap"
-    ln -sf "${package_dir/Xresources}" "${HOME}/.Xresources"
+    ln -sf "${package_dir}/Xresources" "${HOME}/.Xresources"
     ln -sf "${package_dir}/Xresources.d" "${HOME}/.Xresources.d"
     case "$(xdpyinfo | awk '/dimensions/ {print $2}')" in
         2560x1080)
