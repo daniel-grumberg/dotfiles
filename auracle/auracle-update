@@ -16,7 +16,7 @@ get-word() {
 
 pushd "${HOME}/AURPackages"
 
-mapfile outdated < <(auracle sync -q)
+mapfile -t outdated < <(auracle sync -q)
 
 auracle update "${outdated[@]}"
 
