@@ -2,6 +2,7 @@
 
 _emacs_install_deps_ubuntu() {
     sudo apt-get -y install emacs
+    git clone --depth 1 "https://github.com/hlissner/doom-emacs" "${HOME}/.emacs.d"
 }
 
 _emacs_clean_deps_ubuntu() {
@@ -10,10 +11,12 @@ _emacs_clean_deps_ubuntu() {
 
 _emacs_install_deps_arch() {
     sudo pacman -S --noconfirm --needed emacs
+    git clone --depth 1 "https://github.com/hlissner/doom-emacs" "${HOME}/.emacs.d"
 }
 
 _emacs_clean_deps_arch() {
     sudo pacman -Rs --noconfirm emacs
+    rm -rf "${HOME}/.emacs.d"
 }
 
 _emacs_install_deps_macos() {
@@ -29,23 +32,15 @@ _emacs_pre_install() {
 }
 
 _emacs_link_files() {
-    ln -sf "${package_dir}/init.el" "${HOME}/.emacs.d/init.el"
-    ln -sf "${package_dir}/custom-config" "${HOME}/.emacs.d/custom-config"
-    ln -sf "${package_dir}/snippets" "${HOME}/.emacs.d/snippets"
-    # TODO find a way to install use-package and all-the-icons-fonts
-    # using emacs --batch --eval
+    ln -sf "${package_dir}/doom.d" "${HOME}/.doom.d"
 }
 
 _emacs_post_install() {
-    emacs --eval "(progn (pdf-tools-install 1) (all-the-icons-install-fonts 1) (kill-emacs))" &
+    yes | "${HOME}/.emacs.d/bin/doom" install --no-config
+    "${HOME}/.emacs.d/bin/doom" build
+    "${HOME}/.emacs.d/bin/doom" sync
 }
 
 _emacs_clean_files() {
-    rm "${HOME}/.emacs.d/init.el"
-    rm "${HOME}/.emacs.d/custom-config"
-    rm "${HOME}/.emacs.d/snippets"
-}
-
-_emacs_post_clean() {
-    rm -rf "${HOME}/.emacs.d"
+    rm "${HOME}/.doom.d"
 }
