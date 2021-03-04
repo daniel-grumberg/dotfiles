@@ -69,7 +69,8 @@
 ;; Startup screen
 (use-package dashboard
   :init
-  (add-hook 'after-init-hook #'dashboard-refresh-buffer)
+  (when (display-graphic-p)
+    (add-hook 'after-init-hook #'dashboard-refresh-buffer))
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-set-heading-icons t
