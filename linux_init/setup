@@ -5,6 +5,7 @@ _linux_init_install_deps_ubuntu() {
          xdg-user-dirs      \
          zip                \
          unzip              \
+         ripgrep            \
          wget
 }
 
@@ -13,15 +14,21 @@ _linux_init_clean_deps_ubuntu() {
          xdg-user-dirs     \
          zip               \
          unzip             \
+         riprep            \
          wget
 }
 
 _linux_init_install_deps_arch() {
-    sudo pacman -S --needed --noconfirm xdg-user-dirs
+   sudo pacman -S --needed --noconfirm \
+      xdg-user-dirs                    \
+      ripgrep
 }
 
 _linux_init_clean_deps_arch() {
-    sudo pacman -Rs --noconfirm xdg-user-dirs
+   sudo pacman -Rs --noconfirm \
+      xdg-user-dirs            \
+      ripgrep
+
 }
 
 _linux_init_pre_install() {

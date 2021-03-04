@@ -1,0 +1,6 @@
+# key: smv
+# name: SmallVector
+# group: LLVM
+# --
+SmallVector<${1:Type}, ${2:SmallSize}> ${3:Name};
+$0
