@@ -59,9 +59,23 @@
 
 (setq +format-on-save-context 'modification)
 
-; Enable soft wrapping at 120
-(+global-word-wrap-mode +1)
+(global-visual-line-mode +1)
 (setq evil-respect-visual-line-mode +1)
+
+;; Ensure that we move screen line instead of physical lines when
+;; visual-line-mode is on and evil-respect-visual-line-mode is enabled.
+(defun +evil-next-line-a (orig-fn &rest args)
+  (if (and visual-line-mode evil-respect-visual-line-mode)
+      (apply #'evil-next-visual-line args)
+    (apply orig-fn args)))
+
+(defun +evil-previous-line-a (orig-fn &rest args)
+  (if (and visual-line-mode evil-respect-visual-line-mode)
+      (apply #'evil-previous-visual-line args)
+    (apply orig-fn args)))
+
+(advice-add #'evil-next-line :around #'+evil-next-line-a)
+(advice-add #'evil-previous-line :around #'+evil-previous-line-a)
 
 ;; Compilation mode specifics, this doesn't warrant further organization for nowk
 (add-hook 'compilation-finish-functions
