@@ -39,5 +39,3 @@ set_prompt()
 }
 
 export PROMPT_COMMAND='set_prompt'
-
-set -o vi
