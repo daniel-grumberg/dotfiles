@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
+_emacs_install_doom() {
+    git clone --depth 1 "https://github.com/hlissner/doom-emacs" "${HOME}/.emacs.d"
+}
+
 _emacs_install_deps_ubuntu() {
     sudo apt-get -y install emacs
-    git clone --depth 1 "https://github.com/hlissner/doom-emacs" "${HOME}/.emacs.d"
+    _emacs_install_doom
 }
 
 _emacs_clean_deps_ubuntu() {
@@ -11,7 +15,7 @@ _emacs_clean_deps_ubuntu() {
 
 _emacs_install_deps_arch() {
     sudo pacman -S --noconfirm --needed emacs
-    git clone --depth 1 "https://github.com/hlissner/doom-emacs" "${HOME}/.emacs.d"
+    _emacs_install_doom
 }
 
 _emacs_clean_deps_arch() {
@@ -20,11 +24,23 @@ _emacs_clean_deps_arch() {
 }
 
 _emacs_install_deps_macos() {
-    brew install --cask emacs
+    # Ripgrep is a required dependency but fd isn't. Git is also a required
+    # dependency but is needed much earlier than that...
+    brew install ripgrep \
+                 fd
+    brew tap railwaycat/emacsmacport
+    brew install emacs-mac --with-modules
+    ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications/Emacs.app
+    _emacs_install_doom
+}
+
+_emacs_clean_files_macos() {
+    rm -rf "${HOME}/.emacs.d"
+    rm /Applications/Emacs.app
 }
 
 _emacs_clean_deps_macos() {
-    brew uninstall --cask emacs
+    brew uninstall emacs-mac
 }
 
 _emacs_pre_install() {
@@ -44,3 +60,5 @@ _emacs_post_install() {
 _emacs_clean_files() {
     rm "${HOME}/.doom.d"
 }
+
+
