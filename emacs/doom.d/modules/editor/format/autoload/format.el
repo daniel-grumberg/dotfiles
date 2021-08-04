@@ -249,17 +249,16 @@ If nil, BEG and/or END will default to the boundaries of the src block at point.
   (if (eq major-mode 'org-mode)
       (when (org-in-src-block-p t)
         (+format--org-region nil nil))
-    (call-interactively
-     (cond
-           ((and +format-with-lsp
-                 (bound-and-true-p lsp-mode)
-                 (lsp-feature? "textDocument/formatting"))
-            #'lsp-format-buffer)
-           ((and +format-with-lsp
-                 (bound-and-true-p eglot--managed-mode)
-                 (eglot--server-capable :documentFormattingProvider))
-            #'eglot-format-buffer)
-           (#'format-all-buffer)))))
+    (cond
+     ((and +format-with-lsp
+           (bound-and-true-p lsp-mode)
+           (lsp-feature? "textDocument/formatting"))
+      (call-interactively #'lsp-format-buffer))
+     ((and +format-with-lsp
+           (bound-and-true-p eglot--managed-mode)
+           (eglot--server-capable :documentFormattingProvider))
+      (call-interactively #'eglot-format-buffer))
+     (t (call-interactively #'format-all-buffer)))))
 
 ;;;###autoload
 (defun +format/region (beg end)
@@ -307,13 +306,13 @@ If not using LSP this just reformats the entire buffer."
               (bound-and-true-p lsp-mode)
               (lsp-feature? "textDocument/rangeFormatting"))
          (+format--on-save-map-changes (lambda (_prop b e)
-                                           (lsp-format-region b e))))
+                                         (lsp-format-region b e))))
         ((and +format-with-lsp
-               (bound-and-true-p eglot--managed-mode)
-               (eglot--server-capable :documentRangeFormattingProvider)))
+              (bound-and-true-p eglot--managed-mode)
+              (eglot--server-capable :documentRangeFormattingProvider))
          (+format--on-save-map-changes (lambda (_prop b e)
-                                           (eglot-format b e)))
-        (+format/buffer)))
+                                         (eglot-format b e))))
+        (t (+format/buffer))))
 
 ;;
 ;; Hooks
@@ -325,23 +324,23 @@ If not using LSP this just reformats the entire buffer."
 Mark the text between BEG and END as modified.
 LEN-BEFORE refers to the length of the text before the modification."
   (let ((type (if (and (= beg end) (> len-before 0))
-                 'delete
-               'change)))
-       (if undo-in-progress
-           ;; Add back deleted text during undo operations.
-           (if (and (zerop len-before)
-                   (> end beg)
-                   (eq (get-text-property end 'format-on-save-change) 'delete))
-               (remove-list-of-text-properties end (1+ end) '(format-on-save-change)))
-         (with-silent-modifications
-           (setq end (min (1+ end) (point-max)))
-           (put-text-property beg end 'format-on-save-change type)))))
+                  'delete
+                'change)))
+    (if undo-in-progress
+        ;; Add back deleted text during undo operations.
+        (if (and (zerop len-before)
+                 (> end beg)
+                 (eq (get-text-property end 'format-on-save-change) 'delete))
+            (remove-list-of-text-properties end (1+ end) '(format-on-save-change)))
+      (with-silent-modifications
+        (setq end (min (1+ end) (point-max)))
+        (put-text-property beg end 'format-on-save-change type)))))
 
 ;;;###autoload
 (defun +format--on-save-before-save-h ()
-  (cond ((eq +format-on-save-context 'modification)
-           (+format/modified-regions))
-         (+format/buffer)))
+  (if (eq +format-on-save-context 'modification)
+      (+format/modified-regions)
+    (+format/buffer)))
 
 ;;;###autoload
 (defalias '+format--on-save-after-save-h
