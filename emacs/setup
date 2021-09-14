@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 _emacs_install_doom() {
+    rm -rf "${HOME}/.emacs.d"
     git clone --depth 1 "https://github.com/hlissner/doom-emacs" "${HOME}/.emacs.d"
 }
 

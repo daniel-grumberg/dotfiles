@@ -94,10 +94,8 @@ clean_packages() {
 }
 
 clean_system() {
-    local _package_list
     # This is kinda of horrible but it is constrained to one place
-    mapfile -d '' _package_list < <(eval "printf '%s\0' \"\${${hosttype}_arr[@]}\"" | tac -s '')
-    clean "${_package_list[@]}"
+    eval "clean_packages \"\${${hosttype}_packages[@]}\""
 }
 
 create_package_templates() {
