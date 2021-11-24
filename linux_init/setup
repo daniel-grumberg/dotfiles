@@ -1,34 +1,49 @@
 #!/usr/bin/env bash
 
 _linux_init_install_deps_ubuntu() {
-    sudo apt-get -y install \
-         xdg-user-dirs      \
-         zip                \
-         unzip              \
-         ripgrep            \
-         wget
+   sudo apt-get -y install \
+      xdg-user-dirs \
+      rsync \
+      zip \
+      unzip \
+      ripgrep \
+      wget
 }
 
 _linux_init_clean_deps_ubuntu() {
-    sudo apt-get -y remove \
-         xdg-user-dirs     \
-         zip               \
-         unzip             \
-         riprep            \
-         wget
+   sudo apt-get -y remove \
+      xdg-user-dirs \
+      rsync \
+      zip \
+      unzip \
+      riprep \
+      wget
 }
 
 _linux_init_install_deps_arch() {
    sudo pacman -S --needed --noconfirm \
-      xdg-user-dirs                    \
+      xdg-user-dirs \
+      rsync \
       ripgrep
 }
 
 _linux_init_clean_deps_arch() {
    sudo pacman -Rs --noconfirm \
-      xdg-user-dirs            \
+      xdg-user-dirs \
+      rsync \
       ripgrep
 
+}
+
+_clean_user_dir_if_needed() {
+   # If not empty let's move the contents to the actual directory in $data_dir.
+   if [[ -d "${HOME}/${1}" ]]; then
+      rsync -a "${HOME}/${1}/" "${data_dir}/${1}"
+   fi
+
+   # Now that there is a copy of the data at the correct location (if there was
+   # any data), we can safely delete the copy in HOME ahead of symlinking it in.
+   rm -rf "${HOME}/$1"
 }
 
 _linux_init_pre_install() {
@@ -42,6 +57,16 @@ _linux_init_pre_install() {
    mkdir -p "${data_dir}/Public"
    mkdir -p "${data_dir}/Templates"
    mkdir -p "${data_dir}/Videos"
+
+   _clean_user_dir_if_needed "Cache"
+   _clean_user_dir_if_needed "Desktop"
+   _clean_user_dir_if_needed "Documents"
+   _clean_user_dir_if_needed "Music"
+   _clean_user_dir_if_needed "Pictures"
+   _clean_user_dir_if_needed "Public"
+   _clean_user_dir_if_needed "Templates"
+   _clean_user_dir_if_needed "Videos"
+
    ln -sf "${data_dir}/Cache" "${HOME}/Cache"
    ln -sf "${data_dir}/Desktop" "${HOME}/Desktop"
    ln -sf "${data_dir}/Documents" "${HOME}/Documents"
@@ -53,11 +78,11 @@ _linux_init_pre_install() {
 }
 
 _linux_init_install_deps() {
-    :;
+   :
 }
 
 _linux_init_clean_deps() {
-    :;
+   :
 }
 
 _linux_init_link_files() {
