@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:impish
 MAINTAINER Daniel Grumberg
 
 ENV DEBIAN_FRONTEND=noninteractive
