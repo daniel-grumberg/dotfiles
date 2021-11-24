@@ -20,6 +20,13 @@ log() {
     printf "Log: %s.\n" "${1}"
 }
 
+migrate_dir() {
+  if [[ -d "$1" ]]; then
+    cp -a "${1}/." "$2"
+  fi
+  rm -rf "$1"
+}
+
 execute() {
     local _function
     _function="${1}"

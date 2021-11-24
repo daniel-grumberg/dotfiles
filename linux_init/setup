@@ -35,17 +35,6 @@ _linux_init_clean_deps_arch() {
 
 }
 
-_clean_user_dir_if_needed() {
-   # If not empty let's move the contents to the actual directory in $data_dir.
-   if [[ -d "${HOME}/${1}" ]]; then
-      rsync -a "${HOME}/${1}/" "${data_dir}/${1}"
-   fi
-
-   # Now that there is a copy of the data at the correct location (if there was
-   # any data), we can safely delete the copy in HOME ahead of symlinking it in.
-   rm -rf "${HOME}/$1"
-}
-
 _linux_init_pre_install() {
    mkdir -p "${HOME}/.config"
    mkdir -p "${HOME}/.config/systemd/user"
@@ -58,14 +47,14 @@ _linux_init_pre_install() {
    mkdir -p "${data_dir}/Templates"
    mkdir -p "${data_dir}/Videos"
 
-   _clean_user_dir_if_needed "Cache"
-   _clean_user_dir_if_needed "Desktop"
-   _clean_user_dir_if_needed "Documents"
-   _clean_user_dir_if_needed "Music"
-   _clean_user_dir_if_needed "Pictures"
-   _clean_user_dir_if_needed "Public"
-   _clean_user_dir_if_needed "Templates"
-   _clean_user_dir_if_needed "Videos"
+   migrate_dir "${HOME}/Cache" "${data_dir}/Cache"
+   migrate_dir "${HOME}/Desktop" "${data_dir}/Desktop"
+   migrate_dir "${HOME}/Documents" "${data_dir}/Documents"
+   migrate_dir "${HOME}/Music" "${data_dir}/Music"
+   migrate_dir "${HOME}/Pictures" "${data_dir}/Pictures"
+   migrate_dir "${HOME}/Public" "${data_dir}/Public"
+   migrate_dir "${HOME}/Templates" "${data_dir}/Templates"
+   migrate_dir "${HOME}/Videos" "${data_dir}/Videos"
 
    ln -sf "${data_dir}/Cache" "${HOME}/Cache"
    ln -sf "${data_dir}/Desktop" "${HOME}/Desktop"

@@ -2,7 +2,8 @@
 
 _auracle_pre_install_arch() {
     mkdir "${data_dir}/AURPackages"
-    ln -sf "${data_dir}/AURPackages" "${HOME}/AURPackages"
+   migrate_dir "${HOME}/AURPackages" "${data_dir}/AURPackages"
+   ln -sf "${data_dir}/AURPackages" "${HOME}/AURPackages"
 }
 
 _auracle_install_deps_arch() {
