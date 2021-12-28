@@ -4,6 +4,7 @@
   '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
         sql-mode         ; sqlformat is currently broken
         tex-mode         ; latexindent is broken
+        dockerfile-mode  ; dockfmt is kinda broken
         latex-mode)
   "A list of major modes in which to reformat the buffer upon saving.
 
