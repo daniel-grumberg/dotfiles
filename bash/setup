@@ -37,6 +37,7 @@ _bash_install_deps_macos() {
 _bash_link_files_macos() {
     _bash_link_files_common
     ln -sf "${package_dir}/bashrc_macos.sh" "${HOME}/.bashrc"
+    ln -sf "${package_dir}/bash_profile_macos.sh" "${HOME}/.bash_profile"
 }
 
 _bash_clean_files_macos() {
