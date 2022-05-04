@@ -1,0 +1,81 @@
+_macos_init_killall_affected_apps() {
+    for app in "Calendar" \
+        "cfprefsd" \
+        "Finder" \
+        "Safari" \
+        "SystemUIServer" \
+        "iCal"; do
+        killall "${app}" &>/dev/null
+    done
+    log "macOS preference updates might require a reboot."
+}
+
+_macos_init_install_deps() {
+    :
+}
+
+_macos_init_pre_install() {
+    # Finder
+    defaults write com.apple.Finder FXPreferredViewStyle clmv
+    defaults write com.apple.finder ShowPathbar -bool true
+    # This can not be reset easily (make home directory show up in Finder)
+    chflags nohidden ~/ && xattr -d com.apple.FinderInfo ~/
+
+    # Calendar
+    defaults write com.apple.iCal 'Default duration in minutes for new event' 30
+
+    #Printing
+    defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+
+    # Safari
+    defaults write com.apple.Safari IncludeDevelopMenu -bool true
+    defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+    defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool true
+    defaults write NSGlobalDomain WebKitDeveloperExtras -bool false
+
+    #General
+    sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+    defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+    defaults write NSGlobalDomain KeyRepeat -int 1
+    defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+    _macos_init_killall_affected_apps
+}
+
+_macos_init_link_files() {
+    :
+}
+
+_macos_init_clean_files() {
+    :
+}
+
+_macos_init_clean_deps() {
+    :
+}
+
+_macos_init_post_clean() {
+    # Finder
+    defaults write com.apple.Finder FXPreferredViewStyle icnv
+    defaults write com.apple.finder ShowPathbar -bool false
+
+    # Calendar
+    defaults write com.apple.iCal 'Default duration in minutes for new event' 60
+
+    # Printing
+    defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool false
+
+    # Safari
+    defaults write com.apple.Safari IncludeDevelopMenu -bool false
+    defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool false
+    defaults write com.apple.Safari com.apple.Safari.ContentPageGroupIdentifier.WebKit2DeveloperExtrasEnabled -bool false
+    defaults write NSGlobalDomain WebKitDeveloperExtras -bool false
+
+    # General
+    sudo defaults delete /Library/Preferences/com.apple.loginwindow AdminHostInfo
+    defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
+    defaults delete NSGlobalDomain KeyRepeat
+    defaults delete NSGlobalDomain InitialKeyRepeat
+
+    _macos_init_killall_affected_apps
+}

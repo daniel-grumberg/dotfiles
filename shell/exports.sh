@@ -4,4 +4,4 @@ export CLICOLOR=1
 export PAGER="less"
 export MANPAGER="less"
 
-export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/bin:$HOME/.local/src/arcanist/bin"

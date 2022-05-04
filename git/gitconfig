@@ -3,5 +3,5 @@
 [pull]
 	rebase = true
 [user]
-	email = dany.grumberg@gmail.com
+	email = dgrumberg@apple.com
 	name = Daniel Grumberg
