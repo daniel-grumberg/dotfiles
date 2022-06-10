@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 
-_shell_link_files_linux() {
+_shell_link_files_all() {
+    local _aliases_file="$1"
     ln -sf "${package_dir}/exports.sh" "${HOME}/.exports"
-    ln -sf "${package_dir}/linux-aliases.sh" "${HOME}/.aliases"
+    ln -sf "${_aliases_file}" "${HOME}/.aliases"
     ln -sf "${package_dir}/git-prompt.sh" "${HOME}/.git-prompt.sh"
 }
 
-_shell_clean_files_linux() {
+_shell_link_files_linux() {
+    _shell_link_files_all "${package_dir}/linux-aliases.sh"
+}
+
+_shell_clean_files_all() {
     rm "${HOME}/.exports"
     rm "${HOME}/.aliases"
     rm "${HOME}/.git-prompt.sh"
@@ -21,7 +26,7 @@ _shell_link_files_ubuntu() {
 }
 
 _shell_clean_files_ubuntu() {
-    _shell_clean_files_linux
+    _shell_clean_files_all
 }
 
 _shell_clean_deps_ubuntu() {
@@ -37,7 +42,7 @@ _shell_link_files_arch() {
 }
 
 _shell_clean_files_arch() {
-    _shell_clean_files_linux
+    _shell_clean_files_all
 }
 
 _shell_clean_deps_arch() {
@@ -45,13 +50,11 @@ _shell_clean_deps_arch() {
 }
 
 _shell_link_files_macos() {
-    ln -sf "${package_dir}/exports.sh" "${HOME}/.exports"
-    ln -sf "${package_dir}/git-prompt.sh" "${HOME}/.git-prompt.sh"
+    _shell_link_files_all "${package_dir}/macos-aliases.sh"
 }
 
 _shell_clean_files_macos() {
-    rm "${HOME}/.exports"
-    rm "${HOME}/.git-prompt.sh"
+    _shell_clean_files_all
 }
 
 _shell_pre_install() {
@@ -59,11 +62,11 @@ _shell_pre_install() {
 }
 
 _shell_install_deps() {
-    :;
+    :
 }
 
 _shell_clean_deps() {
-    :;
+    :
 }
 
 _shell_post_clean() {
