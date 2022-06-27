@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+
+_fish_link_files_common() {
+    mkdir -p "${HOME}/.config"
+    ln -sf "${package_dir}/config" "${HOME}/.config/fish"
+}
+
+_fish_clean_files_common() {
+    rm "${HOME}/.config/fish"
+}
+
+_fish_link_files_ubuntu() {
+    _fish_link_files_common
+}
+
+_fish_clean_files_ubuntu() {
+    _fish_clean_files_common
+}
+
+_fish_install_deps_arch() {
+    sudo pacman -S --needed --noconfirm fish
+}
+
+_fish_install_deps_ubuntu() {
+    sudo add-apt-repository ppa:fish-shell/release-3
+    sudo apt -y update
+    sudo apt-get -y install fish
+}
+
+_fish_clean_deps_ubuntu() {
+    sudo apt-get -y remove fish
+    sudo add-apt-repository --remove ppa:fish-shell/release-3
+}
+
+_fish_link_files_arch() {
+    _fish_link_files_common
+}
+
+_fish_clean_files_arch() {
+    _fish_clean_files_common
+}
+
+_fish_clean_deps_arch() {
+  sudo pacman -Rs --noconfirm fish
+}
+
+_fish_install_deps_macos() {
+    brew install fish
+}
+
+_fish_link_files_macos() {
+    _fish_link_files_common
+}
+
+_fish_clean_files_macos() {
+    _fish_clean_files_common
+}
+
+_fish_clean_deps_macos() {
+    brew uninstall fish
+}
+
+_fish_install_deps() { :; }
+
+_fish_clean_deps() { :; }
+

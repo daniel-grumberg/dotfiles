@@ -21,16 +21,16 @@ log() {
 }
 
 migrate_dir() {
-  if [[ -d "$1" ]]; then
-    cp -a "${1}/." "$2"
-  fi
-  rm -rf "$1"
+    if [[ -d "$1" ]]; then
+        cp -a "${1}/." "$2"
+    fi
+    rm -rf "$1"
 }
 
 execute() {
     local _function
     _function="${1}"
-    [[ "$(type -t "${_function}")" != "function" ]] && \
+    [[ "$(type -t "${_function}")" != "function" ]] &&
         error "Function (${_function}) does not exist"
 
     "${_function}" || error "${_function} failed"
@@ -54,8 +54,8 @@ load_package() {
         error "package (${_package}) setup script does not exist"
     fi
     # shellcheck source=/dev/null
-    source "${_package_setup}" \
-        || error "${_package_setup} could not be sourced"
+    source "${_package_setup}" ||
+        error "${_package_setup} could not be sourced"
 }
 
 setup_packages() {
@@ -67,11 +67,11 @@ setup_packages() {
         execute_if_exists "_${package}_pre_install" || true
         execute_if_exists "_${package}_pre_install_${hosttype}" || true
         if [[ "${links_only}" -eq "0" ]]; then
-            execute_if_exists "_${package}_install_deps_${hosttype}" \
-                || execute_if_exists "_${package}_install_deps" || true
+            execute_if_exists "_${package}_install_deps_${hosttype}" ||
+                execute_if_exists "_${package}_install_deps" || true
         fi
-        execute_if_exists "_${package}_link_files_${hosttype}" \
-            || execute "_${package}_link_files"
+        execute_if_exists "_${package}_link_files_${hosttype}" ||
+            execute "_${package}_link_files"
         execute_if_exists "_package_post_install_${hosttype}" || true
         execute_if_exists "_${package}_post_install" || true
     done
@@ -89,11 +89,11 @@ clean_packages() {
 
         execute_if_exists "_${package}_pre_clean" || true
         execute_if_exists "_${package}_pre_clean${hosttype}" || true
-        execute_if_exists "_${package}_clean_files_${hosttype}" \
-            || execute "_${package}_clean_files"
+        execute_if_exists "_${package}_clean_files_${hosttype}" ||
+            execute "_${package}_clean_files"
         if [[ "${links_only}" -eq "0" ]]; then
-            execute_if_exists "_${package}_clean_deps_${hosttype}" \
-                || execute_if_exists "_${package}_clean_deps" || true
+            execute_if_exists "_${package}_clean_deps_${hosttype}" ||
+                execute_if_exists "_${package}_clean_deps" || true
         fi
         execute_if_exists "_${package}_post_clean_${hosttype}" || true
         execute_if_exists "_${package}_post_clean" || true
@@ -114,7 +114,7 @@ create_package_templates() {
             continue
         fi
         mkdir -p "${_dir}"
-        cat > "${_dir}/setup" <<EOF
+        cat >"${_dir}/setup" <<EOF
 #!/usr/bin/env bash
 
 _${package}_install_deps() {
@@ -196,8 +196,7 @@ canonicalize() {
             _target_file=$(basename "${_target_file}")
 
             # Iterate down a (possible) chain of symlinks
-            while [[ -L "${_target_file}" ]]
-            do
+            while [[ -L "${_target_file}" ]]; do
                 _target_file=$(readlink "${_target_file}")
                 cd "$(dirname "${_target_file}")"
                 _target_file=$(basename "${_target_file}")
@@ -220,7 +219,7 @@ while [[ "$#" -gt 0 ]]; do
     key="${1}"
     shift
     case "${key}" in
-        -d|--data-dir)
+        -d | --data-dir)
             if [[ -z "${1}" ]]; then
                 usage
                 exit 1
@@ -228,14 +227,14 @@ while [[ "$#" -gt 0 ]]; do
             data_dir="$(realpath "${1}")"
             shift
             ;;
-        -l|--links-only)
+        -l | --links-only)
             links_only=1
             ;;
-        -v|--verbose)
+        -v | --verbose)
             verbose=1
             ;;
         *)
-            positional+=( "${key}" ) # save it in an array for later
+            positional+=("${key}") # save it in an array for later
             ;;
     esac
 done
@@ -287,10 +286,9 @@ macos_packages=(
     "git"
     "ssh"
     "shell"
-    "bash"
+    "fish"
     "vim"
     "emacs"
-    "fonts"
 )
 
 # Ignore unused variable warning
@@ -301,7 +299,7 @@ ubuntu_packages=(
     "git"
     "ssh"
     "shell"
-    "bash"
+    "fish"
     "vim"
     "emacs"
 )
