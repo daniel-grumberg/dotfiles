@@ -22,3 +22,4 @@
 /emacs.d/transient
 /emacs.d/tramp
 /emacs.d/eshell
+emacs/doom.d/custom.el
