@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
 
-_ssh_link_files_common() {
-    ln -sf "${package_dir}/config" "${HOME}/.ssh/config"
-}
-
-_ssh_clean_files_common() {
-    rm "${HOME}/.ssh/config"
-}
-
-
 _ssh_clean_deps_ubuntu() {
     sudo apt-get -y remove ssh
 }
@@ -22,13 +13,11 @@ _ssh_install_deps_arch() {
 }
 
 _ssh_link_files_arch() {
-    _ssh_link_files_common
     ln -sf "${package_dir}/ssh-agent.service" "${HOME}/.config/systemd/user/ssh-agent.service"
     systemctl enable --user ssh-agent.service
 }
 
 _ssh_clean_files_arch() {
-    _ssh_clean_files_common
     systemctl disable --user ssh-agent.service
     rm "${HOME}/.config/ssh-agent.service"
 }
@@ -46,11 +35,9 @@ _ssh_install_deps() {
 }
 
 _ssh_link_files() {
-    _ssh_link_files_common
 }
 
 _ssh_clean_files() {
-    _ssh_clean_files_common
 }
 
 _ssh_clean_deps() {
