@@ -284,7 +284,6 @@ arch_packages=(
 macos_packages=(
     "macos_init"
     "git"
-    "ssh"
     "shell"
     "fish"
     "vim"

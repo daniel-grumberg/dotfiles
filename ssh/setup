@@ -35,9 +35,11 @@ _ssh_install_deps() {
 }
 
 _ssh_link_files() {
+    :;
 }
 
 _ssh_clean_files() {
+    :;
 }
 
 _ssh_clean_deps() {
