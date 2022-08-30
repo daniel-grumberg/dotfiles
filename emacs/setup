@@ -29,9 +29,9 @@ _emacs_install_deps_macos() {
     # dependency but is needed much earlier than that...
     brew install ripgrep \
                  fd
-    brew tap railwaycat/emacsmacport
-    brew install emacs-mac --with-modules
-    ln -s /usr/local/opt/emacs-mac/Emacs.app /Applications/Emacs.app
+    brew tap d12frosted/emacs-plus
+    brew install emacs-plus
+    ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
     _emacs_install_doom
 }
 
