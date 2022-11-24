@@ -1,5 +1,4 @@
 " Needed on some Linuxen to disable stupid bell
-set visualbell
 set number
 set ruler
 set relativenumber
@@ -47,9 +46,8 @@ endfunction
 "Sets the interface
 
 syntax on
-set bg=light
+set bg=dark
 set t_Co=256
-set cc=80
 set textwidth=80
 set formatoptions+=t
 set ch=2
