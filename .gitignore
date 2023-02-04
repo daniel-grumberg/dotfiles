@@ -23,3 +23,4 @@
 /emacs.d/tramp
 /emacs.d/eshell
 emacs/doom.d/custom.el
+ssh/config
