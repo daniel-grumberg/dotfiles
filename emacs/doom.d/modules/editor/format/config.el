@@ -5,6 +5,8 @@
         sql-mode         ; sqlformat is currently broken
         tex-mode         ; latexindent is broken
         dockerfile-mode  ; dockfmt is kinda broken
+        html-mode
+        mhtml-mode
         bibtex-mode)
   "A list of major modes in which to reformat the buffer upon saving.
 

@@ -62,12 +62,6 @@ set nocompatible
 hi Tab cterm=underline
 hi TrailSpace ctermbg=red
 
-match TrailSpace /\s\+$/
-autocmd BufWinEnter * match TrailSpace /\s\+$/
-autocmd InsertEnter * match TrailSpace /\s\+\%#\@<!$/
-autocmd InsertLeave * match TrailSpace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-
 autocmd BufRead,BufNewFile * syntax match Tab /\t/ containedin=ALL
 
 "Makes the screen dark
