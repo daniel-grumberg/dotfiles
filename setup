@@ -118,19 +118,19 @@ create_package_templates() {
 #!/usr/bin/env bash
 
 _${package}_install_deps() {
-    :;
+  :;
 }
 
 _${package}_link_files() {
-    :;
+  :;
 }
 
 _${package}_clean_files() {
-    :;
+  :;
 }
 
 _${package}_clean_deps() {
-    :;
+  :;
 }
 
 EOF
@@ -268,8 +268,7 @@ arch_packages=(
     "ssh"
     "shell"
     "bash"
-    "vim"
-    "emacs"
+    "neovim"
     "auracle"
     "fonts" # This is needs auracle as an install dependency
     "xorg"
@@ -286,8 +285,7 @@ macos_packages=(
     "git"
     "shell"
     "fish"
-    "vim"
-    "emacs"
+    "neovim"
 )
 
 # Ignore unused variable warning
@@ -299,8 +297,7 @@ ubuntu_packages=(
     "ssh"
     "shell"
     "fish"
-    "vim"
-    "emacs"
+    "neovim"
 )
 
 if check_command "${1}"; then

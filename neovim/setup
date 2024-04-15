@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+_neovim_config_dir="${HOME}/.config/nvim"
+
+_neovim_install_deps() {
+  :;
+}
+
+_neovim_install_deps_macos() {
+  brew install neovim
+}
+
+_neovim_link_files() {
+	mkdir -p "$_neovim_config_dir"
+	ln -sf "${package_dir}/init.lua"	"${_neovim_config_dir}/init.lua"
+	ln -sf "${package_dir}/lua"	"${_neovim_config_dir}/lua"
+}
+
+_neovim_clean_files() {
+	rm -rf "$_neovim_config_dir"
+}
+
+_neovim_clean_deps() {
+  :;
+}
+
+_neovim_clean_deps_macos() {
+  brew uninstall neovim
+}
