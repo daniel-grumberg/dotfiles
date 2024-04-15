@@ -202,9 +202,9 @@ return {
 				'Makefile',
 			},
 			silent_chdir = false,
-			show_hidden = true,
+			show_hidden = false,
 		},
-		config = function (_, opts)
+		config = function(_, opts)
 			require('project_nvim').setup(opts)
 			require('telescope').load_extension('projects')
 		end,
