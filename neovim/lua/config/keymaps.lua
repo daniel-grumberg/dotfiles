@@ -34,6 +34,9 @@ map(n, '<leader>wd', '<C-W>c', { desc = 'Delete Window' })
 map(n, '<leader>ws', '<C-W>s', { desc = 'Split Window Below' })
 map(n, '<leader>wv', '<C-W>v', { desc = 'Split Window Right' })
 map(n, '<leader>w=', '<cmd>wincmd =<cr>', { desc = 'Equalizes Windows' })
+-- TODO: figure out how better to handle tab page.
+map(n, '<leader>wt', vim.cmd.tabnext, { desc = 'Next Tab' })
+map(n, '<leader>wT', vim.cmd.tabNext, { desc = 'Previous Tab' })
 
 -- Buffers
 map(n, '<leader>bp', '<cmd>bprevious<cr>', { desc = 'Previous Buffer' })
