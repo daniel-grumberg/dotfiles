@@ -45,18 +45,8 @@ return {
 						group = augroup_id,
 						buffer = buffer,
 						callback = function()
-							require('lsp-format-modifications').format_modifications(client, buffer, {
-								diff_callback = function(comparee_content, buf_content)
-									vim.diff(comparee_content, buf_content, {
-										result_type = 'indices',
-										algorithm = 'myers', -- default git diff algorithm
-										ctxlen = 0,
-										interhunkctxlen = 0,
-										indent_heuristic = true,
-										ignore_cr_at_eol = true,
-									})
-								end,
-							})
+							local success = require('lsp-format-modifications').format_modifications(client, buffer, {})
+							if not success then vim.lsp.buf.format({ bufnr = buffer }) end
 						end,
 					})
 				end
