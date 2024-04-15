@@ -86,7 +86,7 @@ function M.get()
 		{ '<leader>cK', vim.lsp.buf.signature_help, desc = 'Signature Help', has = 'signatureHelp' },
 		{ '<c-k>', vim.lsp.buf.signature_help, mode = 'i', desc = 'Signature Help', has = 'signatureHelp' },
 		{ '<leader>ca', vim.lsp.buf.code_action, desc = 'Code Action', mode = { 'n', 'v' }, has = 'codeAction' },
-		{ '<leader>cr', vim.lsp.buf.rename, desc = 'Rename', has = 'rename' },
+		{ '<leader>cR', vim.lsp.buf.rename,                                                 desc = 'Rename',               has = 'rename' },
 		{ '<leader>cs', function() require('telescope.builtin').lsp_document_symbols() end, desc = 'Goto Symbol', has = '' },
 		{
 			'<leader>cS',
