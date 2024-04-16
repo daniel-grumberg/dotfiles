@@ -25,10 +25,6 @@ _emacs_clean_deps_arch() {
 }
 
 _emacs_install_deps_macos() {
-    # Ripgrep is a required dependency but fd isn't. Git is also a required
-    # dependency but is needed much earlier than that...
-    brew install ripgrep \
-                 fd
     brew tap d12frosted/emacs-plus
     brew install emacs-plus
     ln -s /opt/homebrew/opt/emacs-plus@28/Emacs.app /Applications
@@ -37,11 +33,11 @@ _emacs_install_deps_macos() {
 
 _emacs_clean_files_macos() {
     rm -rf "${HOME}/.emacs.d"
-    rm /Applications/Emacs.app
+    rm -rf /Applications/Emacs.app
 }
 
 _emacs_clean_deps_macos() {
-    brew uninstall emacs-mac
+    brew uninstall emacs-plus
 }
 
 _emacs_pre_install() {
