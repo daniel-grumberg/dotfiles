@@ -78,4 +78,4 @@ opt.tabstop = 2
 opt.shiftwidth = 2
 opt.shiftround = true
 opt.textwidth = 120
-
+opt.expandtab = true
