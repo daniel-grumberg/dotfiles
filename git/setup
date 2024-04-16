@@ -29,12 +29,30 @@ _git_pre_install() {
 }
 
 _git_link_files() {
-    ln -sf "${package_dir}/gitconfig" "${HOME}/.gitconfig"
     ln -sf "${package_dir}/global_gitignore" "${HOME}/.global_gitignore"
 }
 
+_git_post_install() {
+  git config --global core.exclusedfile "~/.global_gitignore"
+  git config --global core.pager "delta"
+
+  git config --global user.name "Daniel Grumberg"
+  git config --global user.email "dany.grumberg@gmail.com"
+
+  git config --global pull.rebase "true"
+
+  git config --global merge.conflictstyle "diff3"
+
+  git config --global diff.colorMoved "default"
+
+  git config --global delta.navigate "true"
+}
+
+_git_pre_clean() {
+  rm -rf ~/.gitconfig
+}
+
 _git_clean_files() {
-    rm "${HOME}/.gitconfig"
     rm "${HOME}/.global_gitignore"
 }
 
