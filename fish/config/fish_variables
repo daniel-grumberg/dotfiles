@@ -1,10 +1,10 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
 SETUVAR --export CLICOLOR:1
-SETUVAR --export EDITOR:vim
+SETUVAR --export EDITOR:nvim
 SETUVAR --export MANPAGER:bat\x20\x2d\x2dtheme\x20gruvbox\x2ddark
 SETUVAR --export PAGER:less
-SETUVAR --export VISUAL:vim
+SETUVAR --export VISUAL:nvim
 SETUVAR __fish_initialized:3400
 SETUVAR _fish_abbr_vi:nvim
 SETUVAR _fish_abbr_vim:nvim
