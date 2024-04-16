@@ -282,6 +282,7 @@ arch_packages=(
 # shellcheck disable=2034
 macos_packages=(
     "macos_init"
+    "fonts"
     "git"
     "shell"
     "fish"

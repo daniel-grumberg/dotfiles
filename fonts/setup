@@ -62,6 +62,24 @@ _fonts_clean_deps_arch() {
     popd
 }
 
+_fonts_install_deps_macos() {
+  brew tap homebrew/cask-fonts
+  local font_packages=""
+  mapfile -t font_packages < <(brew search font-iosevka)
+  for font_package in "${font_packages[@]}"; do
+    brew install "$(basename $font_package)"
+  done
+}
+
+_fonts_clean_deps_macos() {
+  local font_packages=""
+  mapfile -t font_packages < <(brew list | grep font-iosevka)
+  for font_package in "${font_packages[@]}"; do
+    brew uninstall "$font_package"
+  done
+}
+
+
 _fonts_install_deps() {
     :;
 }
