@@ -50,19 +50,20 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 -- Close some filetypes with <q>
 vim.api.nvim_create_autocmd('FileType', {
-	group = augroup('close-with-q'),
-	pattern = {
-		'help',
-		'lspinfo',
-		'notify',
-		'qf',
-		'query',
-		'checkhealth',
-	},
-	callback = function(event)
-		vim.bo[event.buf].buflisted = false
-		vim.api.nvim_buf_set_keymap(event.buf, 'n', 'q', '<cmd>close<cr>', { silent = true })
-	end
+  group = augroup('close-with-q'),
+  pattern = {
+    'help',
+    'lspinfo',
+    'notify',
+    'qf',
+    'Neogit*',
+    'query',
+    'checkhealth',
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.api.nvim_buf_set_keymap(event.buf, 'n', 'q', '<cmd>close<cr>', { silent = true })
+  end
 })
 
 -- Check spelling for certain text filetypes
