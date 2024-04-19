@@ -3,7 +3,7 @@
 _auracle_pre_install_arch() {
     mkdir "${data_dir}/AURPackages"
    migrate_dir "${HOME}/AURPackages" "${data_dir}/AURPackages"
-   ln -sf "${data_dir}/AURPackages" "${HOME}/AURPackages"
+   ln -sF "${data_dir}/AURPackages" "${HOME}/AURPackages"
 }
 
 _auracle_install_deps_arch() {
@@ -20,7 +20,7 @@ _auracle_clean_deps_arch() {
 }
 
 _auracle_link_files_arch() {
-    ln -sf "${package_dir}/auracle-update" "${HOME}/.local/bin/auracle-update"
+    ln -sF "${package_dir}/auracle-update" "${HOME}/.local/bin/auracle-update"
 }
 
 _auracle_clean_files_arch() {

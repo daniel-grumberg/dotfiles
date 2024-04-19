@@ -56,14 +56,14 @@ _linux_init_pre_install() {
    migrate_dir "${HOME}/Templates" "${data_dir}/Templates"
    migrate_dir "${HOME}/Videos" "${data_dir}/Videos"
 
-   ln -sf "${data_dir}/Cache" "${HOME}/Cache"
-   ln -sf "${data_dir}/Desktop" "${HOME}/Desktop"
-   ln -sf "${data_dir}/Documents" "${HOME}/Documents"
-   ln -sf "${data_dir}/Music" "${HOME}/Music"
-   ln -sf "${data_dir}/Pictures" "${HOME}/Pictures"
-   ln -sf "${data_dir}/Public" "${HOME}/Public"
-   ln -sf "${data_dir}/Templates" "${HOME}/Templates"
-   ln -sf "${data_dir}/Videos" "${HOME}/Videos"
+   ln -sF "${data_dir}/Cache" "${HOME}/Cache"
+   ln -sF "${data_dir}/Desktop" "${HOME}/Desktop"
+   ln -sF "${data_dir}/Documents" "${HOME}/Documents"
+   ln -sF "${data_dir}/Music" "${HOME}/Music"
+   ln -sF "${data_dir}/Pictures" "${HOME}/Pictures"
+   ln -sF "${data_dir}/Public" "${HOME}/Public"
+   ln -sF "${data_dir}/Templates" "${HOME}/Templates"
+   ln -sF "${data_dir}/Videos" "${HOME}/Videos"
 }
 
 _linux_init_install_deps() {

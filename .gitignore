@@ -1,7 +1,6 @@
-/vim/bundle/vimwiki/
-/vim/.netrwhist
 /setup.lock
 
+**/.DS_Store
 **/*.old
 **/*.log
 **/*.xbel

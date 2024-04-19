@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: IRBuilder
-# key: irb
-# group: LLVM
-# --
-IRBuilder<> ${1:IRB}(${2:CtorArgs});
-$0

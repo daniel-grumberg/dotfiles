@@ -12,8 +12,8 @@ _neovim_install_deps_macos() {
 
 _neovim_link_files() {
 	mkdir -p "$_neovim_config_dir"
-	ln -sf "${package_dir}/init.lua"	"${_neovim_config_dir}/init.lua"
-	ln -sf "${package_dir}/lua"	"${_neovim_config_dir}/lua"
+	ln -sF "${package_dir}/init.lua"	"${_neovim_config_dir}/init.lua"
+	ln -sF "${package_dir}/lua"	"${_neovim_config_dir}/lua"
 }
 
 _neovim_clean_files() {

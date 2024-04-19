@@ -266,8 +266,7 @@ arch_packages=(
     "linux_init" # Dummy package for specific system configuration
     "git"
     "ssh"
-    "shell"
-    "bash"
+    "fish"
     "neovim"
     "auracle"
     "fonts" # This is needs auracle as an install dependency
@@ -284,7 +283,6 @@ macos_packages=(
     "macos_init"
     "fonts"
     "git"
-    "shell"
     "fish"
     "neovim"
 )
@@ -296,7 +294,6 @@ ubuntu_packages=(
     "fonts" # linux_init is needed to install unzip
     "git"
     "ssh"
-    "shell"
     "fish"
     "neovim"
 )

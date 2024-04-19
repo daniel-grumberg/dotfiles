@@ -5,7 +5,7 @@ _dunst_install_deps_arch() {
 }
 
 _dunst_link_files_arch() {
-    ln -sf "${package_dir}/config-dunst" "${HOME}/.config/dunst"
+    ln -sF "${package_dir}/config-dunst" "${HOME}/.config/dunst"
 }
 
 _dunst_clean_files_arch() {

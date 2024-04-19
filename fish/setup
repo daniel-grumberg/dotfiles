@@ -3,7 +3,7 @@
 _fish_link_files() {
     mkdir -p "${HOME}/.config"
     mkdir -p "${HOME}/.local/share/fish/functions"
-    ln -sf "${package_dir}/config" "${HOME}/.config/fish"
+    ln -sF "${package_dir}/config" "${HOME}/.config/fish"
 }
 
 _fish_clean_files() {

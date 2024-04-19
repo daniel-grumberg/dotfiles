@@ -15,18 +15,18 @@ _xorg_install_deps_arch() {
 }
 
 _xorg_link_files_arch() {
-    ln -sf "${package_dir}/xinitrc" "${HOME}/.xinitrc"
-    ln -sf "${package_dir}/Xmodmap" "${HOME}/.Xmodmap"
-    ln -sf "${package_dir}/Xresources" "${HOME}/.Xresources"
-    ln -sf "${package_dir}/Xresources.d" "${HOME}/.Xresources.d"
+    ln -sF "${package_dir}/xinitrc" "${HOME}/.xinitrc"
+    ln -sF "${package_dir}/Xmodmap" "${HOME}/.Xmodmap"
+    ln -sF "${package_dir}/Xresources" "${HOME}/.Xresources"
+    ln -sF "${package_dir}/Xresources.d" "${HOME}/.Xresources.d"
     case "$(xdpyinfo | awk '/dimensions/ {print $2}')" in
         2560x1080)
-            ln -sf "${package_dir}/Wallpapers/WidescreenWallpaper.png" "${HOME}/Pictures/Wallpaper.png"
+            ln -sF "${package_dir}/Wallpapers/WidescreenWallpaper.png" "${HOME}/Pictures/Wallpaper.png"
             ;;
         *)
             ;;
     esac
-    ln -sf "${package_dir}/fehbg" "${HOME}/.fehbg"
+    ln -sF "${package_dir}/fehbg" "${HOME}/.fehbg"
 }
 
 _xorg_clean_files_arch() {

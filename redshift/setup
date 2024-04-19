@@ -5,7 +5,7 @@ _redshift_install_deps_arch() {
 }
 
 _redshift_link_files_arch() {
-    ln -sf "${package_dir}/config-redshift" "${HOME}/.config/redshift"
+    ln -sF "${package_dir}/config-redshift" "${HOME}/.config/redshift"
 }
 
 _redshift_clean_files_arch() {

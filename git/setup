@@ -29,7 +29,7 @@ _git_pre_install() {
 }
 
 _git_link_files() {
-    ln -sf "${package_dir}/global_gitignore" "${HOME}/.global_gitignore"
+    ln -sF "${package_dir}/global_gitignore" "${HOME}/.global_gitignore"
 }
 
 _git_post_install() {
