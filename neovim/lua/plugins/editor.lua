@@ -230,44 +230,7 @@ return {
 
   -- Strip trailing whitespace on save on modified lines.
   {
-    'axelf4/vim-strip-trailing-whitespace',
-    cmd = { 'StripTrailingWhitespace' },
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      -- Make sure the plugin isn't forcibly enabling the behavior on us.
-      vim.api.nvim_del_augroup_by_name('strip_trailing_whitespace_filetype')
-
-      local augroup = vim.api.nvim_create_augroup('config-strip-trailing-whitespace-on-save', { clear = true })
-      vim.api.nvim_create_autocmd({ 'FileType', 'BufEnter', 'BufReadPre' }, {
-        group = augroup,
-        pattern = '*',
-        callback = function(event)
-          vim.api.nvim_buf_set_var(event.buf, 'strip_trailing_whitespace_enabled', 0)
-          local filetype = vim.api.nvim_buf_get_option(event.buf, 'filetype')
-          local disallowed_ft_patterns = { 'git', 'diff', 'markdown' }
-
-          for _, pattern in ipairs(disallowed_ft_patterns) do
-            if filetype:find(pattern) then
-              return
-            end
-          end
-          vim.api.nvim_buf_set_var(event.buf, 'strip_trailing_whitespace_enabled', 1)
-        end,
-      })
-      -- Make sure the behavior is disabled we will make sure to enable it on file types we want it for via autocommand
-      -- above.
-      vim.api.nvim_buf_set_var(0, 'strip_trailing_whitespace_enabled', 0)
-    end,
-    keys = {
-      { '<leader>tw', '<cmd>StripTrailingWhitespace<cr>', desc = 'Strip Trailing Whitespace' },
-      {
-        '<leader>tW',
-        function()
-          local enabled = vim.api.nvim_buf_get_var(0, 'strip_trailing_whitespace_enabled')
-          vim.api.nvim_buf_set_var(0, 'strip_trailing_whitespace_enabled', enabled and 0 or 1)
-        end,
-        desc = 'Toogle Strip Trailing Whitespace'
-      },
-    }
+    'lewis6991/spaceless.nvim',
+    config = true,
   },
 }
