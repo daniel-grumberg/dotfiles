@@ -11,13 +11,13 @@ _i3_wm_install_deps_arch() {
 _i3_wm_link_files_arch() {
     ln -sF "${package_dir}/config-i3" "${HOME}/.config/i3"
     ln -sF "${package_dir}/config-i3status" "${HOME}/.config/i3status"
-    ln -sF "${package_dir}/i3exit" "${HOME}/.local/bin"
+    ln -sF "${package_dir}/i3exit" "$utilities_dir"
 }
 
 _i3_wm_clean_files_arch() {
     rm "${HOME}/.config/i3"
     rm "${HOME}/.config/i3status"
-    rm "${HOME}/.local/bin"
+    rm "${utilities_dir}/i3exit"
 }
 
 _i3_wm_clean_deps_arch() {

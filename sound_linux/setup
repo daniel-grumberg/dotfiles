@@ -5,7 +5,7 @@ _sound_linux_install_deps_arch() {
 }
 
 _sound_linux_link_files_arch() {
-    ln -sF "${package_dir}/volumectl" "${HOME}/.local/bin/volumectl"
+    ln -sF "${package_dir}/volumectl" "$utilities_dir"
 }
 
 _sound_linux_clean_files_arch() {

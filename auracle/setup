@@ -20,11 +20,11 @@ _auracle_clean_deps_arch() {
 }
 
 _auracle_link_files_arch() {
-    ln -sF "${package_dir}/auracle-update" "${HOME}/.local/bin/auracle-update"
+    ln -sF "${package_dir}/auracle-update" "$utilities_dir"
 }
 
 _auracle_clean_files_arch() {
-    rm "${HOME}/.local/bin/auracle-update"
+    rm "${utilities_dir}/auracle-update"
 }
 
 _auracle_post_clean_arch() {

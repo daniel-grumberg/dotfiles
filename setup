@@ -214,6 +214,7 @@ dotfiles="$(dirname "$(canonicalize)")"
 verbose="0"
 links_only="0"
 data_dir="${HOME}/data"
+utilities_dir="${HOME}/.local/bin"
 positional=()
 while [[ "$#" -gt 0 ]]; do
     key="${1}"
@@ -306,6 +307,7 @@ if check_command "${1}"; then
         set -x
     fi
     [[ -n "${data_dir}" && ! -d "${data_dir}" ]] && mkdir -p "${data_dir}"
+    [[ ! -d "$utilities_dir" ]] && mkdir -p "$utilities_dir"
     "$@"
 else
     usage
