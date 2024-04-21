@@ -27,6 +27,15 @@ migrate_dir() {
     rm -rf "$1"
 }
 
+# Expand template file from first arg into second argument.
+# Any bash variables defined at the point this is called can be used in the template.
+# Define expansions like a bash variable.
+expand_template() {
+  eval "cat <<EOF
+$(cat $1)
+EOF" 2> /dev/null > $2
+}
+
 execute() {
     local _function
     _function="${1}"
