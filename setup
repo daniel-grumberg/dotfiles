@@ -278,6 +278,7 @@ arch_packages=(
     "ssh"
     "fish"
     "neovim"
+    "tmux"
     "auracle"
     "fonts" # This is needs auracle as an install dependency
     "xorg"
@@ -295,6 +296,7 @@ macos_packages=(
     "git"
     "fish"
     "neovim"
+    "tmux"
 )
 
 # Ignore unused variable warning
@@ -306,6 +308,7 @@ ubuntu_packages=(
     "ssh"
     "fish"
     "neovim"
+    "tmux"
 )
 
 if check_command "${1}"; then

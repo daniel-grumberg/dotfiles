@@ -231,6 +231,23 @@ return {
   -- Strip trailing whitespace on save on modified lines.
   {
     'lewis6991/spaceless.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
     config = true,
   },
+  -- enable navigation integration with tmux and/or wezterm
+  {
+    'numToStr/Navigator.nvim',
+    config = true,
+    cmd = { 'NavigatorLeft', 'NavigatorDown', 'NavigatorUp', 'NavigatorRight' },
+    opts = {
+      auto_save = nil,
+      disable_on_zoom = true,
+    },
+    keys = {
+      { '<C-h>', '<cmd>NavigatorLeft<cr>',  mode = { 'n', 't' }, desc = 'Go to Left Window' },
+      { '<C-j>', '<cmd>NavigatorDown<cr>',  mode = { 'n', 't' }, desc = 'Go to Lower Window' },
+      { '<C-k>', '<cmd>NavigatorUp<cr>',    mode = { 'n', 't' }, desc = 'Go to Upper Window' },
+      { '<C-l>', '<cmd>NavigatorRight<cr>', mode = { 'n', 't' }, desc = 'Go to Right Window' },
+    }
+  }
 }

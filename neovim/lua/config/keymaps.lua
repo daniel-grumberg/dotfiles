@@ -15,11 +15,6 @@ map(nx, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true})
 map(nx, '<Up>', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true})
 
 -- Windows
-map(n, '<C-h>', '<C-w>h', { desc = 'Go to Left Window' })
-map(n, '<C-j>', '<C-w>j', { desc = 'Go to Lower Window' })
-map(n, '<C-k>', '<C-w>k', { desc = 'Go to Upper Window' })
-map(n, '<C-l>', '<C-w>l', { desc = 'Go to Right Window' })
-
 map(n, '<leader>w<Up>', '<cmd>resize +2<cr>', { desc = 'Increase Window Height' })
 map(n, '<leader>w<Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height' })
 map(n, '<leader>w<Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Width' })

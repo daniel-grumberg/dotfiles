@@ -40,6 +40,8 @@ _macos_init_pre_install() {
     defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
     defaults write NSGlobalDomain KeyRepeat -int 1
     defaults write NSGlobalDomain InitialKeyRepeat -int 10
+    # Disable input source switching as Ctrl-Space as that conflicts with tmux prefix
+    defaults write "com.apple.symbolichotkeys" "AppleSymbolicHotKeys" -dict-add 60 "{ enabled = 0; value = { parameters = (32, 49, 262144); type = 'standard'; }; }"
 
     _macos_init_killall_affected_apps
 }
@@ -78,6 +80,9 @@ _macos_init_post_clean() {
     defaults write NSGlobalDomain com.apple.swipescrolldirection -bool true
     defaults delete NSGlobalDomain KeyRepeat
     defaults delete NSGlobalDomain InitialKeyRepeat
+
+    # Reenable input source switching
+    defaults write "com.apple.symbolichotkeys" "AppleSymbolicHotKeys" -dict-add 60 "{ enabled = 1; value = { parameters = (32, 49, 262144); type = 'standard'; }; }"
 
     _macos_init_killall_affected_apps
 }
