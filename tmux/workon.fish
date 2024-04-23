@@ -1,21 +1,48 @@
-function workon --description "Attach or start a tmux session to work on a project" --argument name
-  set -f name (string trim -c '/' $name)
-  if tmux ls 2>/dev/null | grep "$dir"
-    tmux attach -t "$dir"
-  else
-    # Find a directory of the right name in the right spot to start the session in.
-    # First search there as it will speed up the search in the common case
-    for dir in (find ~/VersionControlledDocuments/{internal,oss} . ~ -name "$name" -maxdepth 1 -exec realpath {} ";" -quit)
-      if test -d "$dir"
-        pushd .
-        cd "$dir"
-        tmux new-session -d -s "$name" -x - -y -
-        tmux split-window -t "$name" -v -c '#{pane_current_path}' -l "25%"
-        tmux attach -t "$name"
-        popd
-        return 0
-      end
-    end
+function workon --description "Attach or start a tmux session to work on a project"
+  argparse --name=workon 'i/internal' 'h/help' -- $argv
+  if set -q _flag_help
+    echo "\
+Usage: workon [OPTIONS] name
+
+Options:
+  -i --internal Only search for internal projects
+"
+    return 0
   end
-  return 1
+
+  set -f name (string trim -c '/' $argv[1])
+  set -l paths_to_search ~/VersionControlledDocuments/internal . ~
+  if ! set -q _flag_internal
+    set -p paths_to_search ~/VersionControlledDocuments/oss
+  end
+
+  set -l search_results (find $paths_to_search -name $name -maxdepth 1 -type d -exec realpath {} ';')
+  if ! set -q search_results[1]
+    echo "Could not find project $name, looked in $paths_to_search"
+    return 1
+  end
+
+  set -l directory "$search_results[1]"
+
+  # Disambiguate identically named projects based on internal external
+  if string match -e "oss" "$directory"
+    set -f _name "oss/$name"
+  else if string match -e "internal" "$directory"
+    set -f _name "internal/$name"
+  else
+    set -f _name "$name"
+  end
+
+  pushd .
+  cd "$directory"
+
+  if ! tmux ls 2>/dev/null | grep "$_name"
+    tmux new-session -d -s "$_name" -x - -y -
+    tmux split-window -t "$_name" -v -c '#{pane_current_path}' -l "25%"
+  end
+
+  tmux attach -t "$_name"
+
+  popd
+  return 0
 end
