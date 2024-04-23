@@ -120,7 +120,6 @@ return {
 		opts = {},
 		keys = {
 			{ 's', function() require('flash').jump() end,   mode = { 'n', 'x', 'o' }, desc = 'Flash' },
-			{ 'r', function() require('flash').remote() end, mode = { 'x', 'o' },      desc = 'Remote Flash' },
 		},
 	},
 
