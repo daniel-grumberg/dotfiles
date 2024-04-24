@@ -20,10 +20,6 @@ map(n, '<leader>w<Down>', '<cmd>resize -2<cr>', { desc = 'Decrease Window Height
 map(n, '<leader>w<Left>', '<cmd>vertical resize -2<cr>', { desc = 'Decrease Window Width' })
 map(n, '<leader>w<Right>', '<cmd>vertical resize +2<cr>', { desc = 'Increase Window Width' })
 
-map(n, '<leader>wh', '<C-w>h', { desc = 'Go to Left Window' })
-map(n, '<leader>wj', '<C-w>j', { desc = 'Go to Lower Window' })
-map(n, '<leader>wk', '<C-w>k', { desc = 'Go to Upper Window' })
-map(n, '<leader>wl', '<C-w>l', { desc = 'Go to Right Window' })
 map(n, '<leader>ww', '<C-W>p', { desc = 'Other Window' })
 map(n, '<leader>wd', '<C-W>c', { desc = 'Delete Window' })
 map(n, '<leader>ws', '<C-W>s', { desc = 'Split Window Below' })

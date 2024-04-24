@@ -233,20 +233,79 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = true,
   },
-  -- enable navigation integration with tmux and/or wezterm
+  -- enable integration with terminal multiplexer
   {
-    'numToStr/Navigator.nvim',
-    config = true,
-    cmd = { 'NavigatorLeft', 'NavigatorDown', 'NavigatorUp', 'NavigatorRight' },
-    opts = {
-      auto_save = nil,
-      disable_on_zoom = true,
-    },
+    "mrjones2014/smart-splits.nvim",
+    lazy = false,
     keys = {
-      { '<C-h>', '<cmd>NavigatorLeft<cr>',  mode = { 'n', 't' }, desc = 'Go to Left Window' },
-      { '<C-j>', '<cmd>NavigatorDown<cr>',  mode = { 'n', 't' }, desc = 'Go to Lower Window' },
-      { '<C-k>', '<cmd>NavigatorUp<cr>',    mode = { 'n', 't' }, desc = 'Go to Upper Window' },
-      { '<C-l>', '<cmd>NavigatorRight<cr>', mode = { 'n', 't' }, desc = 'Go to Right Window' },
-    }
-  }
+      {
+        '<C-h>',
+        function()
+          require("smart-splits").move_cursor_left()
+        end,
+        mode = { 'n', 't' },
+        desc = "Go to left window",
+      },
+      {
+        '<C-j>',
+        function()
+          require("smart-splits").move_cursor_down()
+        end,
+        mode = { 'n', 't' },
+        desc = "Go to lower window",
+      },
+      {
+        '<C-k>',
+        function()
+          require("smart-splits").move_cursor_up()
+        end,
+        mode = { 'n', 't' },
+        desc = "Go to upper window",
+      },
+      {
+        '<C-l>',
+        function()
+          require("smart-splits").move_cursor_right()
+        end,
+        mode = { 'n', 't' },
+        desc = "Go to right window",
+      },
+      {
+        '<A-h>',
+        function()
+          require("smart-splits").resize_left()
+        end,
+        mode = { 'n', 't' },
+        desc = "Go to left window",
+      },
+      {
+        '<A-j>',
+        function()
+          require("smart-splits").resize_down()
+        end,
+        mode = { 'n', 't' },
+        desc = "Go to lower window",
+      },
+      {
+        '<A-k>',
+        function()
+          require("smart-splits").resize_up()
+        end,
+        mode = { 'n', 't' },
+        desc = "Go to upper window",
+      },
+      {
+        '<A-l>',
+        function()
+          require("smart-splits").resize_right()
+        end,
+        mode = { 'n', 't' },
+        desc = "Go to right window",
+      },
+    },
+    opts = {
+      ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" },
+      ignored_buftypes = { "nofile" }
+    },
+  },
 }
