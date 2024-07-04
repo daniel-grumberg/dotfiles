@@ -46,6 +46,8 @@ _git_post_install() {
   git config --global diff.colorMoved "default"
 
   git config --global delta.navigate "true"
+
+  git config --global rerere.enabled "true"
 }
 
 _git_pre_clean() {
