@@ -18,9 +18,11 @@ _git_clean_deps_arch() {
 
 _git_install_deps_macos() {
     brew install git
+    brew install git-gui
 }
 
 _git_clean_deps_macos() {
+    brew uninstall git-gui
     brew uninstall git
 }
 
