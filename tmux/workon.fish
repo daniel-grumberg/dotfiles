@@ -38,7 +38,6 @@ Options:
 
   if ! tmux ls 2>/dev/null | grep "$_name"
     tmux new-session -d -s "$_name" -x - -y -
-    tmux split-window -t "$_name" -v -c '#{pane_current_path}' -l "25%"
   end
 
   tmux attach -t "$_name"
