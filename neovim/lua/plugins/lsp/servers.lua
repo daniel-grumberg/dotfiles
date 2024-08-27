@@ -1,5 +1,5 @@
-local function isMacOS()
-	return vim.loop.os_uname().sysname == 'Darwin'
+local function isNotMacOS()
+	return vim.loop.os_uname().sysname != 'Darwin'
 end
 
 return {
@@ -17,7 +17,7 @@ return {
 	},
 
 	clangd = {
-		mason = isMacOS(), -- set to false to prevent this server from being installed with mason
+		mason = isNotMacOS(), -- set to false to prevent this server from being installed with mason
 		-- keys = {}
 		root_dir = function(fname)
 			local util = require('lspconfig.util')
