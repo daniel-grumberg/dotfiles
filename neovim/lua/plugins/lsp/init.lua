@@ -32,23 +32,26 @@ return {
 						vim.api.nvim_buf_set_option(buffer, 'formatexpr', 'v:lua.vim.lsp.formatexpr(#{timeout_ms:250})')
 					end
 
-					vim.api.nvim_buf_create_user_command(
-						buffer,
-						"FormatModifications",
-						function()
-						end,
-						{}
-					)
-					local augroup_id = vim.api.nvim_create_augroup('FormatModificationsOnSave', { clear = false })
-					vim.api.nvim_clear_autocmds({ group = augroup_id })
-					vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-						group = augroup_id,
-						buffer = buffer,
-						callback = function()
-							local success = require('lsp-format-modifications').format_modifications(client, buffer, {})
-							if not success then vim.lsp.buf.format({ bufnr = buffer }) end
-						end,
-					})
+
+          if client.supports_method('textDocument/rangeFormatting') then
+            vim.api.nvim_buf_create_user_command(
+              buffer,
+              "FormatModifications",
+              function()
+              end,
+              {}
+            )
+            local augroup_id = vim.api.nvim_create_augroup('FormatModificationsOnSave', { clear = false })
+            vim.api.nvim_clear_autocmds({ group = augroup_id })
+            vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+              group = augroup_id,
+              buffer = buffer,
+              callback = function()
+                local success = require('lsp-format-modifications').format_modifications(client, buffer, {})
+                if not success then vim.lsp.buf.format({ bufnr = buffer }) end
+              end,
+            })
+          end
 				end
 			})
 
