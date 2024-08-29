@@ -50,6 +50,16 @@ return {
   sourcekit = {
     mason = not isMacOS(),
     filetypes = { 'swift' },
+    capabilities = {
+      workspace = {
+        didChangeConfiguration = {
+          dynamicRegistration = true,
+        },
+        didChangeWatchedFiles = {
+          dynamicRegistration = true,
+        },
+      },
+    },
     cmd = {
       'sourcekit-lsp',
       '--experimental-feature',
