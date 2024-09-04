@@ -111,6 +111,8 @@ return {
       },
     },
   },
-  -- swift indentation
-  { 'keith/swift.vim', lazy = false }
+  -- swift
+  { 'keith/swift.vim',          lazy = false },
+  -- objc grammar
+  { 'SolaWing/vim-objc-syntax', lazy = false }
 }
