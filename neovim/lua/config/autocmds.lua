@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- Auto create missing directories when saving a file
-vim.api.nvim_create_autocmd('FileType', {
+vim.api.nvim_create_autocmd('BufWritePre', {
 	group = augroup('auto-create-dirs'),
 	callback = function(event)
 		-- don't do anything for files with a uri e.g. 'ftp://.*'
