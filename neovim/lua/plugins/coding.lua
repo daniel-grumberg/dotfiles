@@ -103,10 +103,10 @@ return {
     opts = {
       options = {
         custom_commentstring = function()
-          if vim.bo.filetype == 'swift' then
+          if vim.tbl_contains({ 'swift', 'c', 'cpp', 'objc' }, vim.bo.filetype) then
             return '// %s'
           end
-          return require('ts_context_commentstring.internal').calculate_commentstring() or vim.bo.commentstring
+          return require('mini.comment').get_commentstring() or vim.bo.commentstring
         end,
       },
     },
