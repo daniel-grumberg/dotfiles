@@ -35,7 +35,7 @@ _git_link_files() {
 }
 
 _git_post_install() {
-  git config --global core.exclusedfile "~/.global_gitignore"
+  git config --global core.excludesfile "~/.global_gitignore"
   git config --global core.pager "delta"
 
   git config --global user.name "Daniel Grumberg"
