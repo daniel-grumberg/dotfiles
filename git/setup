@@ -50,6 +50,8 @@ _git_post_install() {
   git config --global delta.navigate "true"
 
   git config --global rerere.enabled "true"
+
+  git config --global branch.autoSetupMerge "simple"
 }
 
 _git_pre_clean() {
