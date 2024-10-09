@@ -52,6 +52,10 @@ _git_post_install() {
   git config --global rerere.enabled "true"
 
   git config --global branch.autoSetupMerge "simple"
+
+  git config --global rebase.updateRefs "true"
+  git config --global rebase.backend "merge"
+  git config --global rebase.autoSquash "true"
 }
 
 _git_pre_clean() {
