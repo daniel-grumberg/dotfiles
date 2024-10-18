@@ -61,6 +61,7 @@ _git_post_install() {
   git config --global rebase.autoStash "true"
 
   git config --global absorb.oneFixupPerCommit "true"
+  git config --global absorb.maxStack "50"
 }
 
 _git_pre_clean() {
