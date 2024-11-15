@@ -10,7 +10,7 @@ local config = wezterm.config_builder()
 config.color_scheme = 'catppuccin-mocha'
 
 -- Font
-config.font = wezterm.font 'Iosevka Term'
+config.font = wezterm.font 'Iosevka Fixed'
 config.font_size = 15
 
 -- General appearence
