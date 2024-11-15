@@ -27,6 +27,17 @@ migrate_dir() {
     rm -rf "$1"
 }
 
+link_file() {
+  local _source="$1"
+  local _dest="$2"
+  # If the destination is a directory or a symbolic link, let's create the final destination by appending the basename
+  # to it.
+  if [[ -d "$_dest" || ! -L "$_dest" ]]; then
+    _dest="${_dest}/$(basename "$_source")"
+  fi
+  ln -sF "$_source" "$_dest"
+}
+
 # Expand template file from first arg into second argument.
 # Any bash variables defined at the point this is called can be used in the template.
 # Define expansions like a bash variable.
@@ -294,6 +305,7 @@ macos_packages=(
     "macos_init"
     "fonts"
     "git"
+    "wezterm"
     "fish"
     "neovim"
     "tmux"

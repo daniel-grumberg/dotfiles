@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+_wezterm_install_deps_macos() {
+  brew install --cask wezterm
+}
+
+_wezterm_clean_deps_macos() {
+  brew uninstall --cask wezterm
+}
+
+wezterm_config_dir="${HOME}/.config/wezterm"
+
+_wezterm_pre_install() {
+  mkdir -p "$wezterm_config_dir"
+}
+
+_wezterm_link_files() {
+  link_file "${package_dir}/wezterm.lua" "$wezterm_config_dir"
+}
+
+_wezterm_clean_files() {
+  rm -rf "$wezterm_config_dir"
+}
+
