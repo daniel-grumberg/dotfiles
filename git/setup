@@ -17,15 +17,11 @@ _git_clean_deps_arch() {
 }
 
 _git_install_deps_macos() {
-    brew install git
-    brew install git-gui
-    brew install git-absorb
+    brew install git git-gui git-absorb git-delta
 }
 
 _git_clean_deps_macos() {
-    brew uninstall git-absorb
-    brew uninstall git-gui
-    brew uninstall git
+    brew uninstall git git-gui git-absorb git-delta
 }
 
 _git_pre_install() {

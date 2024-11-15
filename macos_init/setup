@@ -13,7 +13,7 @@ _macos_init_killall_affected_apps() {
 }
 
 _macos_init_install_deps() {
-	brew install ripgrep fd git-delta bat nvm bash fzf
+  brew install ripgrep fd bat bash fzf
 }
 
 _macos_init_pre_install() {
@@ -55,7 +55,7 @@ _macos_init_clean_files() {
 }
 
 _macos_init_clean_deps() {
-	brew uninstall ripgrep fd git-delta bat nvm
+  brew uninstall ripgrep fd bat
 }
 
 _macos_init_post_clean() {
