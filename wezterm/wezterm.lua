@@ -20,5 +20,32 @@ config.hide_tab_bar_if_only_one_tab = true
 config.initial_rows = 45
 config.initial_cols = 140
 
+-- Mouse bindings
+config.mouse_bindings = {
+  {
+    event = { Down = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    mouse_reporting = true,
+    action = wezterm.action.Nop,
+  },
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    mouse_reporting = true,
+    action = wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor('Clipboard'),
+  },
+  {
+    event = { Down = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    mouse_reporting = false,
+    action = wezterm.action.Nop,
+  },
+  {
+    event = { Up = { streak = 1, button = 'Left' } },
+    mods = 'SUPER',
+    mouse_reporting = false,
+    action = wezterm.action.CompleteSelectionOrOpenLinkAtMouseCursor('Clipboard'),
+  },
+}
 -- and finally, return the configuration to wezterm
 return config
