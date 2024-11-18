@@ -102,11 +102,11 @@ return {
     event = 'VeryLazy',
     opts = {
       options = {
-        custom_commentstring = function()
+        custom_commentstring = function(ref_position)
           if vim.tbl_contains({ 'swift', 'c', 'cpp', 'objc' }, vim.bo.filetype) then
             return '// %s'
           end
-          return require('mini.comment').get_commentstring() or vim.bo.commentstring
+          return require('mini.comment').get_commentstring(ref_position) or vim.bo.commentstring
         end,
       },
     },
