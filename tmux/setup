@@ -25,11 +25,9 @@ _tmux_link_files_macos() {
   tmux -f /dev/null -L temp start-server \; list-keys > "${tmux_config_dir}/reset.conf"
   ln -sF "${package_dir}/tmux_copy_command_macos.sh" "$utilities_dir/tmux_copy_command"
   ln -sF "${package_dir}/tmux.conf" "$tmux_config_dir"
-  ln -sF "${package_dir}/workon.fish" "${HOME}/.local/share/fish/functions"
 }
 
 _tmux_clean_files() {
-  rm "${HOME}/.local/share/fish/functions/workon.fish"
   rm "${utilities_dir}/tmux_copy_command"
 }
 
