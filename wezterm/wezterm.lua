@@ -12,6 +12,8 @@ config.hide_tab_bar_if_only_one_tab = true
 config.initial_rows = 45
 config.initial_cols = 140
 
+-- Behaviors
+config.quit_when_all_windows_are_closed = false
 -- Mouse bindings
 config.mouse_bindings = {
   {
