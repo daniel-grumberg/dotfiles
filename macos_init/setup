@@ -55,7 +55,7 @@ _macos_init_clean_files() {
 }
 
 _macos_init_clean_deps() {
-  brew uninstall ripgrep fd bat
+  brew uninstall ripgrep fd bat bash fzf
 }
 
 _macos_init_post_clean() {
