@@ -46,6 +46,8 @@ map(n, '<leader>fs', '<cmd>write<cr><esc>', { desc = 'Save file' })
 map(n, '<leader>fN', ':e %:h/', { desc = 'New file (here)' })
 map(n, '<leader>fn', ':e ', { desc = 'New file' })
 
+-- Unbinds
+map(nx, 's', '<Nop>')
 -- Diagnostics
 local diagnostic_goto = function(next, severity)
   local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev

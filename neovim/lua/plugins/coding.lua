@@ -111,6 +111,12 @@ return {
       },
     },
   },
+  -- surround
+  {
+    'echasnovski/mini.surround',
+    event = 'BufEnter',
+    config = true,
+  },
   -- swift
   { 'keith/swift.vim',          lazy = false },
   -- objc grammar

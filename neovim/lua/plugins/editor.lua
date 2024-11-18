@@ -15,6 +15,7 @@ return {
           mode = { 'n', 'v' },
           { ']',          group = '+next' },
           { '[',          group = '+previous' },
+          { 's',          group = '+surround' },
           { '<leader>b',  group = '+buffer' },
           { '<leader>c',  group = '+code' },
           { '<leader>f',  group = '+file/find' },
@@ -29,6 +30,9 @@ return {
           { '<leader>w',  group = '+windows' },
         },
       },
+      triggers = {
+        { 's', mode = { 'n', 'x' } },
+      }
     },
     config = function(_, opts)
       local wk = require('which-key')
