@@ -6,7 +6,10 @@ tmux_plugin_dir="${tmux_config_dir}/plugins"
 _tmux_pre_install() {
   mkdir -p "$tmux_config_dir"
   mkdir -p "$tmux_plugin_dir"
-  git clone 'https://github.com/tmux-plugins/tpm' "${tmux_plugin_dir}/tpm"
+  local _tpm_dir="${tmux_plugin_dir}/tpm"
+  if [[ ! -d "$_tpm_dir" ]]; then
+    git clone 'https://github.com/tmux-plugins/tpm' "$_tpm_dir"
+  fi
 }
 
 _tmux_install_deps() {
