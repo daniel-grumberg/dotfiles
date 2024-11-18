@@ -17,6 +17,8 @@ config.font_size = 15
 config.enable_scroll_bar = true
 config.use_fancy_tab_bar = false
 config.hide_tab_bar_if_only_one_tab = true
+config.initial_rows = 45
+config.initial_cols = 140
 
 -- and finally, return the configuration to wezterm
 return config
