@@ -79,7 +79,7 @@ return {
   },
   {
     'echasnovski/mini.pairs',
-    event = 'VeryLazy',
+    event = 'BufEnter',
     opts = {},
     keys = {
       {
@@ -99,7 +99,7 @@ return {
   -- comments
   {
     'echasnovski/mini.comment',
-    event = 'VeryLazy',
+    event = 'BufEnter',
     opts = {
       options = {
         custom_commentstring = function(ref_position)
