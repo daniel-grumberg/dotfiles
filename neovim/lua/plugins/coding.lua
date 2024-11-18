@@ -87,9 +87,9 @@ return {
         function()
           vim.g.minipairs_disable = not vim.g.minipairs_disable
           if vim.g.minipairs_disable then
-            vim.api.nvim_echo({ 'Disabled auto pairs.' }, false)
+            vim.api.nvim_echo({ { 'Disabled auto pairs.' } }, false, {})
           else
-            vim.api.nvim_echo({ 'Enabled auto pairs.' }, false)
+            vim.api.nvim_echo({ { 'Enabled auto pairs.' } }, false, {})
           end
         end,
         desc = 'Toggle Auto Pairs',
