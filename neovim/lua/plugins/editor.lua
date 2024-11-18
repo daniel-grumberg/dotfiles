@@ -32,6 +32,7 @@ return {
       },
       triggers = {
         { 's', mode = { 'n', 'x' } },
+        { '<leader>', mode = { 'n', 'v' } },
       }
     },
     config = function(_, opts)
