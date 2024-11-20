@@ -73,5 +73,16 @@ return {
       end
       return false -- ensure that lspconfig is still called for this.
     end
-  }
+  },
+
+  gopls = {
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true,
+        },
+        staticcheck = true,
+      },
+    },
+  },
 }
