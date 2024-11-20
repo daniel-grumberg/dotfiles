@@ -2,6 +2,8 @@
 # VERSION: 3.0
 SETUVAR --export CLICOLOR:1
 SETUVAR --export EDITOR:nvim
+SETUVAR FZF_CTRL_T_COMMAND:fd\x20\x2d\x2dtype\x20f\x20\x2d\x2dstrip\x2dcwd\x2dprefix
+SETUVAR FZF_DEFAULT_COMMAND:fd\x20\x2d\x2dtype\x20f\x20\x2d\x2dstrip\x2dcwd\x2dprefix
 SETUVAR --export MANPAGER:bat\x20\x2d\x2dtheme\x20gruvbox\x2ddark
 SETUVAR --export PAGER:less
 SETUVAR --export VISUAL:nvim
