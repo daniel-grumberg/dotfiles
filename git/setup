@@ -30,11 +30,14 @@ _git_pre_install() {
 
 _git_link_files() {
     ln -sF "${package_dir}/global_gitignore" "${HOME}/.global_gitignore"
+    link_file "${package_dir}/git_aliases" "${HOME}/.git_aliases"
 }
 
 _git_post_install() {
   git config --global core.excludesfile "~/.global_gitignore"
   git config --global core.pager "delta"
+
+  git config --global --add include.path "~/.git_aliases"
 
   git config --global user.name "Daniel Grumberg"
   git config --global user.email "dany.grumberg@gmail.com"
