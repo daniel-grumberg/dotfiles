@@ -8,7 +8,7 @@ function t -a name -d "Launch or attach to given tmux session"
   echo foo $selected
   if test -z "$selected"
     echo "No session was selected"
-    exit 0
+    return
   end
 
   echo $selected
