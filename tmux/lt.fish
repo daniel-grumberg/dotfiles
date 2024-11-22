@@ -13,8 +13,10 @@ end
 
 function lt -d "List tmux sessions available and that can be started"
   # List non-currently attached sessions
-  _mru_tmux_sessions
+  set tmux_sessions (_mru_tmux_sessions | string collect)
   # Make sure zoxide knows about official projects
   find ~/VersionControlledDocuments -mindepth 1 -maxdepth 2 -type d | xargs -n 1 zoxide add
-  zoxide query -l
+  set zoxide_paths (zoxide query -l | string collect)
+  # unique using awk. seen acts as a set of lines
+  echo "$tmux_sessions\n$zoxide_paths" | awk '!seen[$0]++'
 end
