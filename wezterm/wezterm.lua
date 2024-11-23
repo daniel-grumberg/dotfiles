@@ -12,8 +12,6 @@ config.hide_tab_bar_if_only_one_tab = true
 config.initial_rows = 45
 config.initial_cols = 140
 
--- Behaviors
-config.quit_when_all_windows_are_closed = false
 -- Mouse bindings
 config.mouse_bindings = {
   {
@@ -42,4 +40,11 @@ config.mouse_bindings = {
   },
 }
 
+-- Launch tmux by default in a "scratch session"
+-- To do this we grab the user's shell by querying the environment and launching it as a login shell dropping into tmux,
+-- then if tmux exits (it very well might not), then we immediately launch an iterative shell.
+-- This is unfortunately kind of hacky but oh well...
+config.default_prog = { os.getenv('SHELL'), '--login', '-c', 'tmux new-session -A -s scratch; $SHELL' }
+
+-- Finally return the config
 return config
