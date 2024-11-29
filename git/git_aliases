@@ -7,3 +7,6 @@
 
   ; Rebase autosquashing non-interactive
   ras = !GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash --autostash --update-refs
+
+  ; for push with lease
+  pf = push --force-with-lease
