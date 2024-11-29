@@ -6,4 +6,4 @@
   ffix = !git log --oneline --no-decorate | fzf -0 --preview 'git show --color=always --pretty=medium {1}' --preview-window='down,70%' | awk '{print $1}' | xargs git commit --fixup
 
   ; Rebase autosquashing non-interactive
-  ras = !"GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash --update-refs $1 @"
+  ras = !GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash --autostash --update-refs
