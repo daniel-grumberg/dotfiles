@@ -1,6 +1,6 @@
 [alias]
   ; Fuzzy add using fzf
-  fadd = !"git ls-files -m -o --exclude-standard | fzf --print0 -m --preview='git diff --color=always {}' --preview-window='down,70%' | xargs -0 git add --all"
+  fa = !"git ls-files -m -o --exclude-standard | fzf --print0 -m --preview='git diff --color=always {}' --preview-window='down,70%' | xargs -0 git add --all"
 
   ; Fuzzy fixup
   ffix = !git log --oneline --no-decorate | fzf -0 --preview 'git show --color=always --pretty=medium {1}' --preview-window='down,70%' | awk '{print $1}' | xargs git commit --fixup
