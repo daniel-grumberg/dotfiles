@@ -15,5 +15,5 @@ function lt -d "List tmux sessions available and that can be started"
   if test -n "$TMUX"
     set -f current_session_name (tmux display-message -p "#{session_name}")
   end
-  echo "$tmux_sessions\n$official_projects\n$zoxide_paths" | awk -v name="$current_session_name" 'BEGIN { seen[name]++ } !seen[$0]++'
+  echo -e "$tmux_sessions\n$official_projects\n$zoxide_paths" | awk -v name="$current_session_name" 'BEGIN { seen[name]++ } !seen[$0]++'
 end
