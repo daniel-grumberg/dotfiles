@@ -4,7 +4,7 @@ local config = wezterm.config_builder()
 
 -- General appearence
 config.color_scheme = 'catppuccin-mocha'
-config.font = wezterm.font 'Iosevka Fixed'
+config.font = wezterm.font 'Iosevka Fixed SS08'
 config.font_size = 15
 config.enable_scroll_bar = true
 config.use_fancy_tab_bar = false
