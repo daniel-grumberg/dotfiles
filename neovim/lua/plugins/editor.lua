@@ -32,6 +32,10 @@ return {
       },
       triggers = {
         { 's', mode = { 'n', 'x' } },
+        { 'S',        mode = { 'n', 'x' } },
+        { 'g',        mode = { 'n', 'x' } },
+        { ']',        mode = { 'n', 'x' } },
+        { '[',        mode = { 'n', 'x' } },
         { '<leader>', mode = { 'n', 'v' } },
       }
     },
