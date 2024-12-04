@@ -66,7 +66,7 @@ return {
       { '<leader><space>', function() require('telescope.builtin').find_files() end, desc = 'Find Files (Root Directory)' },
       -- file/find
       {
-        '<leader>fb',
+        '<leader>bb',
         function()
           require('telescope.builtin').buffers({ sort_mru = true, sort_lastused = true })
         end,
