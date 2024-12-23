@@ -32,10 +32,10 @@ link_file() {
   local _dest="$2"
   # If the destination is a directory or a symbolic link, let's create the final destination by appending the basename
   # to it.
-  if [[ -d "$_dest" || ! -L "$_dest" ]]; then
+  if [[ -d "$_dest" && ! -L "$_dest" ]]; then
     _dest="${_dest}/$(basename "$_source")"
   fi
-  ln -sF "$_source" "$_dest"
+  ln -sFh "$_source" "$_dest"
 }
 
 # Expand template file from first arg into second argument.
