@@ -7,7 +7,7 @@ _fish_link_files() {
 }
 
 _fish_clean_files() {
-    rm "${HOME}/.local/share/fish/functions"
+    rm -rf "${HOME}/.local/share/fish/functions"
     rm "${HOME}/.config/fish"
 }
 
