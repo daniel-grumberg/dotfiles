@@ -29,15 +29,14 @@ _git_pre_install() {
 }
 
 _git_link_files() {
-    link_file "${package_dir}/global_gitignore" "${HOME}"
-    link_file "${package_dir}/git_aliases" "${HOME}"
+  :;
 }
 
 _git_post_install() {
-  git config --global core.excludesfile "~/.global_gitignore"
+  git config --global core.excludesfile "${package_dir}/global_gitignore"
   git config --global core.pager "delta"
 
-  git config --global --add include.path "~/.git_aliases"
+  git config --global --add include.path "${package_dir}/git_aliases"
 
   git config --global user.name "Daniel Grumberg"
   git config --global user.email "dany.grumberg@gmail.com"
@@ -68,7 +67,7 @@ _git_pre_clean() {
 }
 
 _git_clean_files() {
-    rm "${HOME}/.global_gitignore"
+  :;
 }
 
 _git_post_clean() {
