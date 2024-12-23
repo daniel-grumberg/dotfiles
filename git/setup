@@ -29,8 +29,8 @@ _git_pre_install() {
 }
 
 _git_link_files() {
-    ln -sF "${package_dir}/global_gitignore" "${HOME}/.global_gitignore"
-    link_file "${package_dir}/git_aliases" "${HOME}/.git_aliases"
+    link_file "${package_dir}/global_gitignore" "${HOME}"
+    link_file "${package_dir}/git_aliases" "${HOME}"
 }
 
 _git_post_install() {
