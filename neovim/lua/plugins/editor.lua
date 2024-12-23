@@ -48,83 +48,32 @@ return {
   -- Fuzzy Finder
   -- TODO: Add support for Trouble here
   {
-    'nvim-telescope/telescope.nvim',
-    version = false, -- use HEAD as telescope doesn't really do releases
-    cmd = 'Telescope',
-    dependencies = {
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build =
-        'cmake -S . -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-        enabled = vim.fn.executable('cmake') == 1
-      },
-      { 'nvim-lua/plenary.nvim' }
-    },
+    'ibhagwan/fzf-lua',
     keys = {
       -- Replicate old emacs setup
-      { '<leader>:',       function() require('telescope.builtin').commands() end,   desc = 'Run Command' },
-      { '<leader><space>', function() require('telescope.builtin').find_files() end, desc = 'Find Files (Root Directory)' },
+      { '<leader>:',       function() require('fzf-lua').commands() end,              desc = 'Run Command' },
+      { '<leader><space>', function() require('fzf-lua').files() end,                 desc = 'Find Files' },
       -- file/find
-      {
-        '<leader>bb',
-        function()
-          require('telescope.builtin').buffers({ sort_mru = true, sort_lastused = true })
-        end,
-        desc = 'Find Buffer'
-      },
-      { '<leader>ff', function() require('telescope.builtin').find_files() end, desc = 'Find Files (Root Directory)' },
-      {
-        '<leader>fF',
-        function()
-          require('telescope.builtin').find_files({ cwd = require('telescope.utils').buffer_dir() })
-        end,
-        desc = 'Find Files Here'
-      },
-      { '<leader>fr', function() require('telescope.builtin').oldfiles() end,   desc = 'Find Recent Files (Root Directory)' },
-      {
-        '<leader>fR',
-        function()
-          require('telescope.builtin').oldfiles({ cwd = require('telescope.utils').buffer_dir() })
-        end,
-        desc = 'Find Recent Files (cwd)'
-      },
+      { '<leader>bb',      function() require('fzf-lua').buffers() end,               desc = 'Find Buffer' },
+      { '<leader>ff',      function() require('fzf-lua').files() end,                 desc = 'Find Files' },
+      { '<leader>fr',      function() require('fzf-lua').oldfiles() end,              desc = 'Find Recent Files' },
       -- help
-      { '<leader>hk', function() require('telescope.builtin').keymaps() end,                          desc = 'Keymaps' },
-      { '<leader>hm', function() require('telescope.builtin').man_pages() end,                        desc = 'Man Pages' },
-      { '<leader>ht', function() require('telescope.builtin').help_tags() end,                        desc = 'Help Tags' },
+      { '<leader>hk',      function() require('fzf-lua').keymaps() end,               desc = 'Keymaps' },
+      { '<leader>hm',      function() require('fzf-lua').manpages() end,              desc = 'Man Pages' },
+      { '<leader>ht',      function() require('fzf-lua').helptags() end,              desc = 'Help Tags' },
       -- search
-      { '<leader>s"', function() require('telescope.builtin').registers() end,                        desc = 'Registers' },
-      { '<leader>sa', function() require('telescope.builtin').autocommands() end,                     desc = 'Auto Commands' },
-      { '<leader>sb', function() require('telescope.builtin').current_buffer_fuzzy_find() end,        desc = 'Buffer' },
-      { '<leader>sc', function() require('telescope.builtin').commands() end,                         desc = 'Commands' },
-      { '<leader>sC', function() require('telescope.builtin').command_history() end,                  desc = 'Command History' },
-      { '<leader>sd', function() require('telescope.builtin').diagnostics({ bufnr = 0 }) end,         desc = 'Document Diagnostics' },
-      { '<leader>sD', function() require('telescope.builtin').diagnostics() end,                      desc = 'Workspace Diagnostics' },
-      { '<leader>sg', function() require('telescope.builtin').live_grep() end,                        desc = 'Grep (Root Directory)' },
-      { '<leader>sG', function() require('telescope.builtin').live_grep({ cwd = false }) end,         desc = 'Grep (cwd)' },
-      { '<leader>sR', function() require('telescope.builtin').resume() end,                           desc = 'Telescope Resume' },
-      { '<leader>sw', function() require('telescope.builtin').grep_string({ word_match = '-w' }) end, desc = 'Word (Root Dir)' },
-      {
-        '<leader>sW',
-        function()
-          require('telescope.builtin').grep_string({ cwd = false, word_match = '-w' })
-        end,
-        desc = 'Word (cwd)'
-      },
-      { '<leader>sw', function() require('telescope.builtin').grep_string() end, mode = 'v', desc = 'Selection (Root Dir)' },
-      {
-        '<leader>sW',
-        function()
-          require('telescope.builtin').grep_string({ cwd = false })
-        end,
-        mode = 'v',
-        desc = 'Selection (cwd)'
-      },
+      { '<leader>s"',      function() require('fzf-lua').registers() end,             desc = 'Registers' },
+      { '<leader>sa',      function() require('fzf-lua').autocmds() end,              desc = 'Auto Commands' },
+      { '<leader>sb',      function() require('fzf-lua').lgrep_curbuf() end,          desc = 'Buffer' },
+      { '<leader>sc',      function() require('fzf-lua').commands() end,              desc = 'Commands' },
+      { '<leader>sC',      function() require('fzf-lua').command_history() end,       desc = 'Command History' },
+      { '<leader>sd',      function() require('fzf-lua').diagnostics_document() end,  desc = 'Document Diagnostics' },
+      { '<leader>sD',      function() require('fzf-lua').diagnostics_workspace() end, desc = 'Workspace Diagnostics' },
+      { '<leader>sg',      function() require('fzf-lua').live_grep() end,             desc = 'Grep' },
+      { '<leader>sR',      function() require('fzf-lua').resume() end,                desc = 'FzfLua Resume' },
+      { '<leader>sw',      function() require('fzf-lua').grep() end,                  desc = 'Word' },
+      { '<leader>sw',      function() require('fzf-lua').grep_visual() end,           mode = 'v',                    desc = 'Selection' },
     },
-    config = function(_, opts)
-      require('telescope').setup(opts)
-      require('telescope').load_extension('fzf')
-    end
   },
   -- Flash does emacs avy style movement
   {
@@ -201,42 +150,19 @@ return {
     },
   },
 
-  -- Setup project detection
-  {
-    'ahmedkhalf/project.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    opts = {
-      patterns = {
-        '.git',
-        '.xcodeproj',
-        '.xcworkspace',
-        '.proj_root',
-        'Makefile',
-      },
-      silent_chdir = false,
-      show_hidden = false,
-    },
-    config = function(_, opts)
-      require('project_nvim').setup(opts)
-      require('telescope').load_extension('projects')
-    end,
-    keys = {
-      { "<leader>pp", function() require("telescope").extensions.projects.projects() end, desc = 'Open Project' },
-    },
-  },
-
   -- Finds and lists all of TODO, HACK, BUG, etc comments in project and loads them into a browsable list.
   -- TODO: Add support for trouble
   {
     'folke/todo-comments.nvim',
-    cmd = { 'TodoTelescope' },
+    dependencies = { 'ibhagwan/fzf-lua' },
+    cmd = { 'TodoFzfLua' },
     event = { 'BufReadPre', 'BufNewFile' },
     config = true,
     keys = {
       { ']t',         function() require('todo-comments').jump_next() end,  desc = 'Next Todo Comment' },
       { '[t',         function() require('todo-comments').jump_prev() end,  desc = 'Previous Todo Comment' },
-      { '<leader>st', '<cmd>TodoTelescope<cr>',                             desc = 'Todo' },
-      { '<leader>sT', '<cmd>TodoTelescope keywords=TODO,FIX,FIXME,XXX<cr>', desc = 'Todo/Fix/Fixme/xxx' },
+      { '<leader>st', '<cmd>TodoFzfLua<cr>',                               desc = 'Todo' },
+      { '<leader>sT', '<cmd>TodoFzfLua keywords=TODO,FIX,FIXME,XXX<cr>',   desc = 'Todo/Fix/Fixme/xxx' },
     },
   },
 

@@ -31,26 +31,26 @@ function M.get()
 		{
 			'gd',
 			function()
-				require('telescope.builtin').lsp_definitions({ reuse_win = true })
+        require('fzf-lua').lsp_definitions({ reuse_win = true })
+      end,
+      desc = 'Goto Definition',
+      has = 'definition'
+    },
+    {
+      '<leader>cd',
+      function()
+        require('fzf-lua').lsp_definitions({ reuse_win = true })
 			end,
 			desc = 'Goto Definition',
 			has = 'definition'
 		},
 		{ 'gD', vim.lsp.buf.declaration, desc = 'Goto Declaration', has = 'declaration' },
-		{
-			'<leader>cd',
-			function()
-				require('telescope.builtin').lsp_definitions({ reuse_win = true })
-			end,
-			desc = 'Goto Definition',
-			has = 'definition'
-		},
-		{ 'gr', '<cmd>Telescope lsp_references<cr>', desc = 'Goto References', has = 'references' },
-		{ '<leader>cr', '<cmd>Telescope lsp_references<cr>', desc = 'Goto References', has = 'references' },
+    { 'gr',         function() require('fzf-lua').lsp_references() end, desc = 'Goto References',  has = 'references' },
+    { '<leader>cr', function() require('fzf-lua').lsp_references() end, desc = 'Goto References',  has = 'references' },
 		{
 			'gI',
 			function()
-				require('telescope.builtin').lsp_implementations({ reuse_win = true })
+        require('fzf-lua').lsp_implementations({ reuse_win = true })
 			end,
 			desc = 'Goto Implementation',
 			has = 'implementation',
@@ -58,26 +58,10 @@ function M.get()
 		{
 			'<leader>cI',
 			function()
-				require('telescope.builtin').lsp_implementations({ reuse_win = true })
+        require('fzf-lua').lsp_implementations({ reuse_win = true })
 			end,
 			desc = 'Goto Implementation',
 			has = 'implementation',
-		},
-		{
-			'gy',
-			function()
-				require('telescope.builtin').lsp_type_definitions({ reuse_win = true })
-			end,
-			desc = 'Goto Type Definition',
-			has = 'typeDefinition',
-		},
-		{
-			'<leader>cd',
-			function()
-				require('telescope.builtin').lsp_type_definitions({ reuse_win = true })
-			end,
-			desc = 'Goto Type Definition',
-			has = 'typeDefinition',
 		},
 		{ 'K', vim.lsp.buf.hover, desc = 'Hover', has = 'hover' },
 		{ '<leader>ch', vim.lsp.buf.hover, desc = 'Hover', has = 'hover' },
@@ -87,11 +71,11 @@ function M.get()
 		{ '<c-k>', vim.lsp.buf.signature_help, mode = 'i', desc = 'Signature Help', has = 'signatureHelp' },
 		{ '<leader>ca', vim.lsp.buf.code_action, desc = 'Code Action', mode = { 'n', 'v' }, has = 'codeAction' },
 		{ '<leader>cR', vim.lsp.buf.rename,                                                 desc = 'Rename',               has = 'rename' },
-		{ '<leader>cs', function() require('telescope.builtin').lsp_document_symbols() end, desc = 'Goto Symbol', has = '' },
+    { '<leader>cs', function() require('fzf-lua').lsp_document_symbols() end, desc = 'Goto Symbol',          has = '' },
 		{
 			'<leader>cS',
 			function()
-				require('telescope.builtin').lsp_dynamic_workspace_symbols()
+        require('fzf-lua').lsp_live_workspace_symbols()
 			end,
 			desc = 'Goto Symbol (Workspace)',
 			has = ''
@@ -103,7 +87,7 @@ end
 
 function M.has(buffer, method)
 	method = method:find('/') and method or 'textDocument/' .. method
-	local clients = vim.lsp.get_active_clients({ bufnr = buffer })
+  local clients = vim.lsp.get_clients({ bufnr = buffer })
 	for _, client in ipairs(clients) do
 		if client.supports_method(method) then
 			return true
@@ -114,7 +98,7 @@ end
 
 function M.resolve(buffer)
 	local servers = require('plugins.lsp.servers')
-	local clients = vim.lsp.get_active_clients({ bufnr = buffer })
+  local clients = vim.lsp.get_clients({ bufnr = buffer })
 	local keyspec = M.get()
 	for _, client in ipairs(clients) do
 		local maps = servers[client.name] and servers[client.name].keys or {}
