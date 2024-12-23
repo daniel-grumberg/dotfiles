@@ -24,16 +24,16 @@ _tmux_link_files() {
   :;
 }
 
-_tmux_link_files_macos() {
+_tmux_link_files() {
   tmux -f /dev/null -L temp start-server \; list-keys > "${tmux_config_dir}/reset.conf"
-  link_file "${package_dir}/tmux_copy_command_macos.sh" "$utilities_dir"
+  link_file "${package_dir}/tmux_copy_command_${hosttype}.sh" "$utilities_dir"
   link_file "${package_dir}/tmux.conf" "$tmux_config_dir"
   link_file "${package_dir}/lt.fish" "${HOME}/.local/share/fish/functions/"
   link_file "${package_dir}/t.fish" "${HOME}/.local/share/fish/functions/"
 }
 
 _tmux_clean_files() {
-  rm "${utilities_dir}/tmux_copy_command"
+  :;
 }
 
 _tmux_clean_deps() {

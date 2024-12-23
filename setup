@@ -90,8 +90,8 @@ setup_packages() {
             execute_if_exists "_${package}_install_deps_${hosttype}" ||
                 execute_if_exists "_${package}_install_deps" || true
         fi
-        execute_if_exists "_${package}_link_files_${hosttype}" ||
-            execute "_${package}_link_files"
+        execute_if_exists "_${package}_link_files_${hosttype}" || true
+        execute "_${package}_link_files" || true
         execute_if_exists "_package_post_install_${hosttype}" || true
         execute_if_exists "_${package}_post_install" || true
     done
