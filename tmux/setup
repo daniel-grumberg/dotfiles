@@ -32,6 +32,10 @@ _tmux_link_files() {
   link_file "${package_dir}/t.fish" "${HOME}/.local/share/fish/functions/"
 }
 
+_tmux_package_post_install() {
+  ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+}
+
 _tmux_clean_files() {
   :;
 }
